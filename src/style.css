@@ -171,8 +171,25 @@ body.menu-open .main-header {
 }
 
 .main-header.scrolled {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  /* Background removed here, will be handled by GSAP or specific state */
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .main-header.scrolled {
+    background: transparent;
+  }
+
+  .header-right {
+    display: none;
+    /* Remove contact from header on mobile to prevent gaps */
+  }
 }
 
 .header-content {
@@ -932,6 +949,8 @@ body.menu-open .main-header {
   background: #000;
   padding: 100px 0 40px;
   color: #fff;
+  overflow: hidden;
+  /* Prevent any bleed */
 }
 
 .footer-top {
@@ -960,6 +979,8 @@ body.menu-open .main-header {
 .footer-nav {
   display: flex;
   gap: 100px;
+  flex-wrap: wrap;
+  /* Allow wrapping on tablets */
 }
 
 .footer-col h4 {
@@ -1000,14 +1021,19 @@ body.menu-open .main-header {
     display: none;
   }
 
-  .project-details-content {
-    flex-direction: column;
+  .nav-main {
+    grid-template-columns: 1fr;
     gap: 40px;
+    justify-content: center;
   }
 
-  .project-meta-area {
-    flex-wrap: wrap;
-    gap: 30px;
+  .nav-about-col {
+    display: none;
+    /* Hide about on tablets/phones to save space */
+  }
+
+  .nav-links a {
+    font-size: 2.8rem;
   }
 }
 
@@ -1015,47 +1041,156 @@ body.menu-open .main-header {
 
   .container,
   .container-fluid {
-    padding: 0 20px;
+    padding: 0 25px;
   }
 
+  /* Header Mobile */
+  .main-header {
+    height: 70px;
+  }
+
+  .menu-logo {
+    margin-left: 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Slider Mobile Fixes */
   .hero-slider {
-    width: calc(100% - 40px);
-    height: 45vh;
-    margin-top: 80px;
+    width: 100%;
+    left: 0;
+    margin-top: 0;
+    border-radius: 0;
   }
 
+  /* Hero Info Bar Mobile Elegance */
   .hero-info-bar {
-    padding: 15px 20px;
+    top: 55%;
+    /* Centered better for mobile slides */
+  }
+
+  .info-horizontal-line {
+    display: none;
+    /* Cleaner look on mobile */
+  }
+
+  .info-content-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .hero-info-bar .info-left {
     flex-direction: column;
     gap: 10px;
-    align-items: flex-start;
+  }
+
+  .project-name {
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .slide-counter {
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  .see-detail-link {
+    font-size: 0.9rem;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 2px;
   }
 
   .hero-logo-text {
-    bottom: 20px;
-    left: 20px;
+    z-index: 100;
+    left: 25px;
+    bottom: 40px;
   }
 
   .hero-logo-text span {
-    font-size: clamp(2rem, 10vw, 5rem);
-    text-transform: uppercase;
+    font-size: 10vw;
+    /* Precise fit for ASPECTMOBILI */
+    letter-spacing: -0.04em;
+  }
+
+  /* Project Details Mobile */
+  .project-details-container {
+    top: auto !important;
+    bottom: 40px !important;
+    /* Fixed at the very bottom */
+    left: 25px;
+    width: calc(100% - 50px);
+    z-index: 10;
+  }
+
+  .project-details-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .project-title-area {
+    grid-column: auto;
+  }
+
+  .project-meta-area {
+    grid-column: auto;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .meta-value {
+    font-size: 0.9rem;
+  }
+
+  /* Navigation Mobile */
+  .nav-container {
+    padding: 30px 25px 40px;
+  }
+
+  .nav-links a {
+    font-size: 2.1rem !important;
+  }
+
+  .nav-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 30px;
+  }
+
+  .social-links {
+    gap: 15px;
   }
 
   .scroll-arrow {
-    bottom: 20px;
-    right: 20px;
+    display: none;
   }
 
   .works-grid {
-    gap: 80px;
+    gap: 60px;
   }
 
-  .card-image-box,
-  .card-info-external {
-    padding: 0;
+  /* Footer Mobile Fixes */
+  .footer-top {
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 50px;
   }
 
+  .footer-nav {
+    flex-direction: column;
+    gap: 40px;
+  }
 
+  .footer-bottom {
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+  }
 }
 
 /* =============================================

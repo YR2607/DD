@@ -229,107 +229,78 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollArrow = document.getElementById('scroll-arrow')
     const projectDetails = document.getElementById('project-details')
 
-    // Main Timeline
-    const mainTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroSection,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1.2,
-        onUpdate: (self) => {
-          const isScrolled = self.progress > 0.05
-          const isAtTop = self.progress < 0.01
+    // Use GSAP MatchMedia for robust responsive animations
+    const mm = gsap.matchMedia()
 
-          // 1. Handle "scrolled" state (Background and Colors) for the pinned section
-          if (isScrolled) {
-            header.classList.add('scrolled')
-          } else {
-            header.classList.remove('scrolled')
-          }
+    mm.add({
+      isDesktop: `(min-width: 769px)`,
+      isMobile: `(max-width: 768px)`
+    }, (context) => {
+      const { isDesktop, isMobile } = context.conditions
 
-          // STOP Slider when scrolling starts
-          if (self.progress > 0.02) {
-            if (progressTween && progressTween.isActive()) {
-              progressTween.pause()
-            }
-          } else {
-            if (progressTween && progressTween.paused()) {
-              progressTween.resume()
+      // Main Timeline
+      const mainTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroSection,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.2,
+          onUpdate: (self) => {
+            // Header background is now handled globally
+
+            // STOP Slider when scrolling starts
+            if (self.progress > 0.02) {
+              if (progressTween && progressTween.isActive()) progressTween.pause()
+            } else {
+              if (progressTween && progressTween.paused()) progressTween.resume()
             }
           }
         }
-      }
-    })
+      })
 
-    // 0. Change Background Color to White
-    mainTl.to([heroSection, '.hero-pin-wrapper'], {
-      backgroundColor: '#ffffff',
-      duration: 1
-    }, 0)
-
-    // 2. Hide scroll arrow early
-    if (scrollArrow) {
-      mainTl.to(scrollArrow, {
-        opacity: 0,
-        duration: 0.1
-      }, 0)
-    }
-
-    // 3. Shrink Slider
-    if (heroSlider) {
-      mainTl.to(heroSlider, {
-        width: '90%',
-        left: '5%',
-        height: '70vh',
-        y: '8vh', // Slightly adjust y for better composition
-        borderRadius: '2px',
+      // 0. Background change
+      mainTl.to([heroSection, '.hero-pin-wrapper'], {
+        backgroundColor: '#ffffff',
         duration: 1
       }, 0)
-    }
 
-    // 4. Transform Logo and Change Color
-    if (heroLogo) {
-      const logoSpan = heroLogo.querySelector('span')
+      // 1. Shrink Slider - Responsive
+      mainTl.to(heroSlider, {
+        width: isMobile ? '100.2%' : '90%', /* Using 100% to avoid overflow-x gap */
+        left: isMobile ? '0%' : '5%',
+        height: isMobile ? '55vh' : '70vh',
+        y: isMobile ? '0vh' : '8vh',
+        borderRadius: isMobile ? '0px' : '2px',
+        duration: 1
+      }, 0)
+
+      // 2. Transform Logo
       mainTl.to(heroLogo, {
-        bottom: '60px', /* Aligned with project details bottom */
-        left: '5%',    /* Exact margin match */
+        bottom: isMobile ? '40px' : '60px',
+        left: isMobile ? '25px' : '5%',
         color: '#000000',
         duration: 1
       }, 0)
 
-      mainTl.to(logoSpan, {
-        fontSize: 'clamp(2.5rem, 8vw, 7.5rem)', /* Smaller size for longer name */
+      mainTl.to(heroLogo.querySelector('span'), {
+        fontSize: isMobile ? 'clamp(1.5rem, 8.5vw, 2.2rem)' : 'clamp(2.5rem, 8vw, 7.5rem)',
         fontWeight: '900',
-        textTransform: 'uppercase', /* All caps as requested */
+        textTransform: 'uppercase',
+        letterSpacing: isMobile ? '-0.02em' : '-0.02em',
         duration: 1
       }, 0)
-    }
 
-    // 5. Fade out info bar
-    if (heroInfoBar) {
-      mainTl.to(heroInfoBar, {
-        opacity: 0,
-        duration: 0.3
-      }, 0.2)
-    }
+      // 3. Fade out bar
+      if (heroInfoBar) mainTl.to(heroInfoBar, { opacity: 0, duration: 0.3 }, 0.2)
 
-    // 6. Reveal Project Details
-    if (projectDetails) {
-      mainTl.to(projectDetails, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8
-      }, 0.4)
-    }
+      // 4. Reveal Details
+      if (projectDetails) mainTl.to(projectDetails, { opacity: 1, y: 0, duration: 0.8 }, 0.4)
 
-    // 7. Reveal center text on image
-    const overlayTexts = document.querySelectorAll('.slide-overlay-text')
-    if (overlayTexts.length > 0) {
-      mainTl.to(overlayTexts, {
-        opacity: 1,
-        duration: 0.5
-      }, 0.3)
-    }
+      // 5. Center text on image
+      const overlayTexts = document.querySelectorAll('.slide-overlay-text')
+      if (overlayTexts.length > 0) mainTl.to(overlayTexts, { opacity: 1, duration: 0.5 }, 0.3)
+    })
+
 
     // 8. GLOBAL HEADER BEHAVIOR (Hide on Scroll Down, Show on Scroll Up)
     ScrollTrigger.create({
@@ -340,8 +311,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollY = window.scrollY
         const isAtTop = scrollY < 50
 
-        // Handle Burger Color globally
-        if (scrollY > 100) {
+        // 1. Handle Burger Color
+        // It should be black on white background (scrollY > window.innerHeight)
+        if (scrollY > window.innerHeight * 0.8) {
           burgerBtn.querySelectorAll('.line').forEach(line => line.style.background = '#000')
         } else {
           if (!navOverlay.classList.contains('active')) {
@@ -349,13 +321,25 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
 
-        // Show/Hide Header Nav
+        // 2. Handle Header Background & Nav Visibility
+        const navLinks = header.querySelectorAll('.desktop-nav a, .btn-contact')
+
         if (isAtTop) {
+          // Top of page: Transparent, Nav visible, White text
+          gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
           gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+          gsap.to(navLinks, { color: '#ffffff', duration: 0.1 })
         } else if (isScrollingDown) {
+          // Scrolling Down: Transparent, Nav hidden (only burger visible)
+          gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
           gsap.to([desktopNav, contactBtn], { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
         } else {
+          // Scrolling UP: White background, Nav visible, Black text
+          gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
           gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+
+          // Force black text on white header background
+          gsap.to(navLinks, { color: '#000000', duration: 0.1 })
         }
       }
     })
