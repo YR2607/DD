@@ -42,13 +42,13 @@ export function initScrollAnimations(slider) {
         })
 
         mainTl.to([heroSection, '.hero-pin-wrapper'], {
-            backgroundColor: '#ffffff',
+            backgroundColor: 'transparent',
             duration: 1
         }, 0)
 
         mainTl.to(heroSlider, {
-            width: isMobile ? '100.2%' : '90%',
-            left: isMobile ? '0%' : '5%',
+            width: isMobile ? '100.2%' : '86%',
+            left: isMobile ? '0%' : '7%',
             height: isMobile ? '55vh' : '70vh',
             y: isMobile ? '0vh' : '8vh',
             borderRadius: isMobile ? '0px' : '2px',
@@ -57,12 +57,12 @@ export function initScrollAnimations(slider) {
 
         mainTl.to(heroLogo, {
             bottom: isMobile ? '40px' : '60px',
-            left: isMobile ? '25px' : '5%',
+            left: isMobile ? '25px' : '40px',
             duration: 1
         }, 0)
 
         mainTl.to(heroLogo.querySelector('span'), {
-            fontSize: isMobile ? 'clamp(0.75rem, 4.25vw, 1.1rem)' : 'clamp(1.25rem, 4vw, 3.75rem)',
+            fontSize: isMobile ? 'clamp(0.75rem, 4.25vw, 1.1rem)' : 'clamp(1.25rem, 4vw, 4.75rem)',
             fontWeight: '900',
             color: '#000000',
             duration: 1
@@ -112,15 +112,28 @@ export function initScrollAnimations(slider) {
     const revealElements = document.querySelectorAll('.works-grid, .work-card')
     revealElements.forEach((el) => {
         gsap.fromTo(el,
-            { opacity: 0, y: 60, scale: 0.98 },
+            { y: 60, scale: 0.98 },
             {
-                opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out',
+                y: 0, scale: 1, duration: 1.5, ease: 'power3.out',
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
+                    start: 'top 95%',
                     toggleActions: 'play none none none'
                 }
             }
         )
     })
+
+    // Hide logo before "View All" and Footer to prevent overlap
+    if (heroLogo) {
+        gsap.to(heroLogo, {
+            opacity: 0,
+            scrollTrigger: {
+                trigger: '.view-all-container',
+                start: 'top bottom',
+                end: 'top 95%',
+                scrub: true
+            }
+        })
+    }
 }
