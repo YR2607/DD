@@ -189,13 +189,13 @@ export function initScrollAnimations(slider) {
         // Cinematic Image Reveal
         gsap.to(imageMask, {
             clipPath: 'inset(0 0% 0 0)',
-            duration: 2,
-            ease: 'power4.inOut',
+            duration: 2.5,
+            ease: 'power3.inOut',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 75%',
-                end: 'top 25%',
-                scrub: true
+                start: 'top 90%',
+                end: 'top 40%',
+                scrub: 0.5
             }
         })
 
@@ -212,15 +212,15 @@ export function initScrollAnimations(slider) {
 
         // Content Stagger Reveal
         gsap.from([aboutNumber, aboutText], {
-            y: 50,
+            y: 30,
             opacity: 0,
-            filter: 'blur(15px)',
-            duration: 1.5,
-            stagger: 0.15,
-            ease: 'power3.out',
+            filter: 'blur(8px)',
+            duration: 1.2,
+            stagger: 0.1,
+            ease: 'power2.out',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 65%',
+                start: 'top 95%',
                 toggleActions: 'play none none none'
             }
         })
@@ -230,14 +230,14 @@ export function initScrollAnimations(slider) {
         if (titleChars.length) {
             gsap.from(titleChars, {
                 opacity: 0,
-                y: 30,
-                filter: 'blur(10px)',
-                stagger: 0.02,
-                duration: 1.2,
-                ease: 'power3.out',
+                y: 20,
+                filter: 'blur(5px)',
+                stagger: 0.015,
+                duration: 1,
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: row,
-                    start: 'top 70%',
+                    start: 'top 92%',
                     toggleActions: 'play none none none'
                 }
             })
@@ -317,14 +317,14 @@ export function initScrollAnimations(slider) {
         // 4. Split Text Animation for Portal Title
         gsap.from('.portal-title .char', {
             opacity: 0,
-            y: 80,
-            rotateX: -45,
-            stagger: 0.02,
-            duration: 1.2,
-            ease: 'power4.out',
+            y: 40,
+            rotateX: -20,
+            stagger: 0.015,
+            duration: 1,
+            ease: 'power3.out',
             scrollTrigger: {
                 trigger: '.portal-title',
-                start: 'top 85%'
+                start: 'top 95%'
             }
         })
 
