@@ -193,8 +193,8 @@ export function initScrollAnimations(slider) {
             ease: 'power4.inOut',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 90%',
-                end: 'top 40%',
+                start: 'top 75%',
+                end: 'top 25%',
                 scrub: true
             }
         })
@@ -220,7 +220,7 @@ export function initScrollAnimations(slider) {
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 85%',
+                start: 'top 65%',
                 toggleActions: 'play none none none'
             }
         })
@@ -237,7 +237,7 @@ export function initScrollAnimations(slider) {
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: row,
-                    start: 'top 85%',
+                    start: 'top 70%',
                     toggleActions: 'play none none none'
                 }
             })
