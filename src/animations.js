@@ -84,13 +84,7 @@ export function initScrollAnimations(slider) {
             const scrollY = window.scrollY
             const isAtTop = scrollY < 50
 
-            if (scrollY > window.innerHeight * 0.8) {
-                burgerBtn.querySelectorAll('.line').forEach(line => line.style.background = '#000')
-            } else {
-                if (!navOverlay.classList.contains('active')) {
-                    burgerBtn.querySelectorAll('.line').forEach(line => line.style.background = '#fff')
-                }
-            }
+            const burgerLines = burgerBtn.querySelectorAll('.line')
 
             const navLinks = header.querySelectorAll('.desktop-nav a, .btn-contact')
 
@@ -98,13 +92,21 @@ export function initScrollAnimations(slider) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
                 gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
                 gsap.to(navLinks, { color: '#ffffff', duration: 0.1 })
+                if (!navOverlay.classList.contains('active')) {
+                    gsap.to(burgerLines, { background: '#ffffff', duration: 0.1 })
+                }
             } else if (isScrollingDown) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
                 gsap.to([desktopNav, contactBtn], { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
+                // Если мы скроллим вниз и ушли от Hero, гамбургер должен быть черным
+                if (scrollY > window.innerHeight * 0.8) {
+                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
+                }
             } else {
                 gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
                 gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
                 gsap.to(navLinks, { color: '#000000', duration: 0.1 })
+                gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
             }
         }
     })

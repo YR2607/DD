@@ -933,7 +933,7 @@ body.menu-open .main-header {
   align-items: flex-start;
   position: relative;
   z-index: 20;
-  background: #ffffff;
+  background: transparent;
 }
 
 .info-left {
@@ -1019,91 +1019,128 @@ body.menu-open .main-header {
    FOOTER
 ============================================= */
 .footer {
-  padding: 100px 0 40px;
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-}
-
-.footer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 7%;
-  right: 7%;
-  bottom: 0;
-  background: #000;
-  z-index: 1;
-  /* Relative to footer z-index */
-}
-
-.footer {
-  padding: 100px 0 40px;
-  color: #fff;
-  overflow: hidden;
+  background-color: #f2f2f1;
+  /* Matched with nav-menu background */
+  color: #000;
+  padding: 100px 0 60px;
   position: relative;
   z-index: 20;
-  background: transparent;
 }
 
-.footer-top {
+.footer .container-fluid {
+  padding-left: 7%;
+  padding-right: 7%;
+}
+
+.footer-nav-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 80px;
-}
-
-.footer-logo {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.8rem;
-  /* Slightly smaller */
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 20px;
-  color: #fff;
-  letter-spacing: 0.1em;
-}
-
-.footer-desc {
-  color: rgba(255, 255, 255, 0.6);
-  max-width: 300px;
-}
-
-.footer-nav {
-  display: flex;
-  gap: 100px;
-  flex-wrap: wrap;
-  /* Allow wrapping on tablets */
-}
-
-.footer-col h4 {
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  color: rgba(255, 255, 255, 0.5);
 }
 
-.footer-col ul li {
-  margin-bottom: 15px;
+.footer-links {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #000;
+  display: flex;
+  gap: 2px;
 }
 
-.footer-col a {
-  color: rgba(255, 255, 255, 0.8);
+.footer-links a {
+  color: inherit;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
 }
 
-.footer-col a:hover {
-  color: #fff;
+.footer-links a:hover {
+  opacity: 0.5;
+  transform: translateY(-2px);
 }
 
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 40px;
+.footer-contact a {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.footer-contact a:hover {
+  opacity: 0.5;
+  transform: translateY(-2px);
+}
+
+.footer-middle-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 30px;
+}
+
+.footer-socials a {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #999;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.footer-socials a:hover {
+  color: #000;
+  transform: translateY(-2px);
+}
+
+
+.footer-bottom-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.footer-big-logo {
+  font-family: var(--font-heading);
+  font-size: 7rem;
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-left: -0.02em;
+  color: #000;
+}
+
+.footer-info-group {
+  display: flex;
+  gap: 120px;
+  align-items: flex-end;
+  padding-bottom: 5px;
+}
+
+.footer-legal p {
+  font-size: 0.72rem;
+  color: #999;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.footer-policy a {
+  font-size: 0.72rem;
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+.footer-policy a:hover {
+  color: #000;
 }
 
 /* =============================================
@@ -1267,31 +1304,58 @@ body.menu-open .main-header {
     gap: 60px;
   }
 
-  /* Footer Mobile Fixes */
-  .footer-top {
-    flex-direction: column;
-    gap: 50px;
-    margin-bottom: 50px;
+  /* New Footer Mobile Fixes */
+  .footer {
+    padding: 60px 0 40px;
   }
 
-  .footer-nav {
+  .footer-nav-row {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    padding-bottom: 30px;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 15px 20px;
+  }
+
+  .footer-middle-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .footer-partners {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 40px;
   }
 
-  .footer-bottom {
+  .footer-big-logo {
+    font-size: 18vw;
+    margin-left: -0.02em;
+  }
+
+  .footer-info-group {
     flex-direction: column;
-    gap: 20px;
-    text-align: left;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
   }
 }
 
 /* =============================================
    REVEAL ANIMATIONS
 ============================================= */
-.reveal {
-  /* opacity removed to prevent logo flickering through cards */
-}
 
 /* =============================================
    MISC
