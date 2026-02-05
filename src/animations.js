@@ -138,4 +138,190 @@ export function initScrollAnimations(slider) {
             }
         })
     }
+
+    // 0. SCROLL PROGRESS BAR
+    gsap.to('.scroll-progress', {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+            scrub: 0.3
+        }
+    })
+
+    // HELPER: Improved Split Text function (handles <br>)
+    const splitText = (selector) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+            const html = el.innerHTML;
+            const lines = html.split('<br>');
+
+            el.innerHTML = lines.map(line => {
+                const chars = line.split('').map(char =>
+                    `<span class="char" style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
+                ).join('');
+                return `<span class="line" style="display: block; overflow: hidden;">${chars}</span>`;
+            }).join('');
+        });
+    }
+
+    // Prepare titles for split animation
+    splitText('.about-title, .portal-title');
+
+    // 1. HEADER ANIMATIONS
+    const aboutRows = document.querySelectorAll('.about-row')
+    aboutRows.forEach((row, index) => {
+        const imageMask = row.querySelector('.about-image-mask')
+        const aboutImg = row.querySelector('.about-img')
+        const aboutTitle = row.querySelector('.about-title')
+        const aboutText = row.querySelector('.about-text-content')
+        const aboutNumber = row.querySelector('.about-number')
+
+        // Cinematic Image Reveal
+        gsap.to(imageMask, {
+            clipPath: 'inset(0 0% 0 0)',
+            duration: 2,
+            ease: 'power4.inOut',
+            scrollTrigger: {
+                trigger: row,
+                start: 'top 75%',
+                end: 'top 25%',
+                scrub: true
+            }
+        })
+
+        // Image Parallax Zoom
+        gsap.to(aboutImg, {
+            scale: 1,
+            scrollTrigger: {
+                trigger: row,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        })
+
+        // Content Stagger Reveal
+        gsap.from([aboutNumber, aboutText], {
+            y: 50,
+            opacity: 0,
+            filter: 'blur(15px)',
+            duration: 1.5,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: row,
+                start: 'top 65%',
+                toggleActions: 'play none none none'
+            }
+        })
+
+        // Split Text Animation for About Title
+        const titleChars = aboutTitle.querySelectorAll('.char')
+        if (titleChars.length) {
+            gsap.from(titleChars, {
+                opacity: 0,
+                y: 30,
+                filter: 'blur(10px)',
+                stagger: 0.02,
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                }
+            })
+        }
+    })
+
+    // CONTACT PORTAL & MAGNETIC EFFECT
+    const portal = document.querySelector('.contact-portal')
+    if (portal) {
+        const magneticBtn = portal.querySelector('.portal-magnetic-btn')
+        const btnText = magneticBtn.querySelector('.btn-text')
+        const btnCircle = magneticBtn.querySelector('.btn-circle')
+
+        // Magnetic effect logic
+        const moveBtn = (e) => {
+            const rect = magneticBtn.getBoundingClientRect()
+            const centerX = rect.left + rect.width / 2
+            const centerY = rect.top + rect.height / 2
+            const moveX = (e.clientX - centerX) * 0.4
+            const moveY = (e.clientY - centerY) * 0.4
+
+            gsap.to(magneticBtn, {
+                x: moveX,
+                y: moveY,
+                duration: 0.6,
+                ease: 'power2.out'
+            })
+
+            gsap.to([btnText, btnCircle], {
+                x: moveX * 0.3,
+                y: moveY * 0.3,
+                duration: 0.6,
+                ease: 'power2.out'
+            })
+        }
+
+        const resetBtn = () => {
+            gsap.to([magneticBtn, btnText, btnCircle], {
+                x: 0,
+                y: 0,
+                duration: 0.8,
+                ease: 'elastic.out(1, 0.3)'
+            })
+        }
+
+        magneticBtn.addEventListener('mousemove', moveBtn)
+        magneticBtn.addEventListener('mouseleave', resetBtn)
+
+        // MAGNETIC WAVES (Text Displacement)
+        const portalTitle = portal.querySelector('.portal-title')
+        const moveTitle = (e) => {
+            const rect = portal.getBoundingClientRect()
+            const centerX = rect.left + rect.width / 2
+            const centerY = rect.top + rect.height / 2
+            const moveX = (e.clientX - centerX) * 0.05
+            const moveY = (e.clientY - centerY) * 0.05
+
+            gsap.to(portalTitle, {
+                x: moveX,
+                y: moveY,
+                duration: 1.2,
+                ease: 'power2.out'
+            })
+        }
+
+        const resetTitle = () => {
+            gsap.to(portalTitle, {
+                x: 0, y: 0,
+                duration: 1.5,
+                ease: 'elastic.out(1, 0.3)'
+            })
+        }
+
+        portal.addEventListener('mousemove', moveTitle)
+        portal.addEventListener('mouseleave', resetTitle)
+
+        // 4. Split Text Animation for Portal Title
+        gsap.from('.portal-title .char', {
+            opacity: 0,
+            y: 80,
+            rotateX: -45,
+            stagger: 0.02,
+            duration: 1.2,
+            ease: 'power4.out',
+            scrollTrigger: {
+                trigger: '.portal-title',
+                start: 'top 85%'
+            }
+        })
+
+        // MatchMedia for mobile (disable magnetic on touch)
+        mm.add("(max-width: 768px)", () => {
+            magneticBtn.removeEventListener('mousemove', moveBtn)
+            magneticBtn.removeEventListener('mouseleave', resetBtn)
+        })
+    }
 }
