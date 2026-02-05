@@ -10,6 +10,8 @@
 
   --spacing-section: clamp(80px, 12vw, 160px);
   --container-width: 1600px;
+  --content-left-shift: clamp(100px, 15vw, 300px);
+  /* Shift to reveal logo */
   --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --easing-smooth: cubic-bezier(0.16, 1, 0.3, 1);
@@ -24,7 +26,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  background-color: var(--color-bg);
+  background-color: #ffffff;
 }
 
 body {
@@ -33,7 +35,7 @@ body {
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--color-bg);
+  background-color: #ffffff;
 }
 
 body.is-loading {
@@ -497,9 +499,9 @@ body.menu-open .main-header {
   position: relative;
   width: 100%;
   height: 250vh;
-  /* More height for smoother scrub */
   background: #000;
-  /* Changed to black to avoid white flash */
+  z-index: 10;
+  /* Below logo */
 }
 
 .hero-pin-wrapper {
@@ -521,6 +523,7 @@ body.menu-open .main-header {
   height: 100%;
   overflow: hidden;
   border-radius: 0px;
+  z-index: 5;
 }
 
 /* Shrunk state will be handled by GSAP */
@@ -689,27 +692,27 @@ body.menu-open .main-header {
   opacity: 0.6;
 }
 
-/* Big Logo Text */
+/* Big Logo Text - Now Fixed */
 .hero-logo-text {
-  position: absolute;
+  position: fixed;
   bottom: 80px;
   left: 40px;
-  z-index: 10;
+  z-index: 15;
+  /* Above hero, but below works and footer */
   pointer-events: none;
-  /* mix-blend-mode removed for now to ensure visibility on all slides */
+  transition: color 0.4s ease;
 }
 
 .hero-logo-text span {
   font-family: var(--font-heading);
   font-size: clamp(3rem, 13vw, 10rem);
-  /* Reduced initial size for ASPECTMOBILI */
   font-weight: 900;
   line-height: 0.85;
   color: #fff;
   display: block;
-  opacity: 1;
   text-transform: uppercase;
   letter-spacing: -0.02em;
+  will-change: font-size, transform;
 }
 
 .hero-logo-text.shrunk {
@@ -844,7 +847,40 @@ body.menu-open .main-header {
    WORKS SHOWCASE
 ============================================= */
 .works-showcase {
+  position: relative;
+  z-index: 20;
+}
+
+.works-showcase::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--content-left-shift);
+  right: 0;
+  bottom: 0;
   background: var(--color-bg);
+  z-index: -1;
+}
+
+.works-showcase .container,
+.footer .container {
+  padding-left: var(--content-left-shift);
+  padding-right: 40px;
+  max-width: calc(var(--container-width) + var(--content-left-shift));
+}
+
+@media (max-width: 768px) {
+
+  .works-showcase .container,
+  .footer .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .works-showcase::after,
+  .footer::after {
+    left: 0;
+  }
 }
 
 .works-grid {
@@ -921,6 +957,8 @@ body.menu-open .main-header {
   font-weight: 500;
 }
 
+
+
 .view-all-container {
   margin-top: 120px;
   text-align: center;
@@ -946,11 +984,22 @@ body.menu-open .main-header {
    FOOTER
 ============================================= */
 .footer {
-  background: #000;
   padding: 100px 0 40px;
   color: #fff;
   overflow: hidden;
-  /* Prevent any bleed */
+  position: relative;
+  z-index: 20;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--content-left-shift);
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: -1;
 }
 
 .footer-top {
