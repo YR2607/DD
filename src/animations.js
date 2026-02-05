@@ -46,6 +46,15 @@ export function initScrollAnimations(slider) {
             duration: 1
         }, 0)
 
+        // Animate hero section height on mobile (from 120vh to 65vh)
+        if (isMobile) {
+            mainTl.to(heroSection, {
+                height: '65vh',
+                duration: 1,
+                ease: 'none'
+            }, 0)
+        }
+
         mainTl.to(heroSlider, {
             width: isMobile ? '100.2%' : '86%',
             left: isMobile ? '0%' : '7%',
@@ -65,6 +74,7 @@ export function initScrollAnimations(slider) {
             fontSize: isMobile ? 'clamp(0.75rem, 4.25vw, 1.1rem)' : 'clamp(1.25rem, 4vw, 4.75rem)',
             fontWeight: '900',
             color: '#000000',
+            opacity: isMobile ? 0 : 1,
             duration: 1
         }, 0)
 
@@ -183,8 +193,8 @@ export function initScrollAnimations(slider) {
             ease: 'power4.inOut',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 75%',
-                end: 'top 25%',
+                start: 'top 90%',
+                end: 'top 40%',
                 scrub: true
             }
         })
@@ -210,7 +220,7 @@ export function initScrollAnimations(slider) {
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: row,
-                start: 'top 65%',
+                start: 'top 85%',
                 toggleActions: 'play none none none'
             }
         })
@@ -227,7 +237,7 @@ export function initScrollAnimations(slider) {
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: row,
-                    start: 'top 70%',
+                    start: 'top 85%',
                     toggleActions: 'play none none none'
                 }
             })
