@@ -25,64 +25,73 @@ export function initScrollAnimations(slider) {
     }, (context) => {
         const { isDesktop, isMobile } = context.conditions
 
-        const mainTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: heroSection,
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: 1.2,
-                onUpdate: (self) => {
-                    if (self.progress > 0.02) {
-                        if (slider.isActive?.()) slider.pause()
-                    } else {
-                        if (!slider.isActive?.() && !document.body.classList.contains('menu-open')) slider.resume()
+        if (heroSection) {
+            const mainTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1.2,
+                    onUpdate: (self) => {
+                        if (self.progress > 0.02) {
+                            if (slider?.isActive?.()) slider.pause()
+                        } else {
+                            if (!slider?.isActive?.() && !document.body.classList.contains('menu-open')) slider?.resume()
+                        }
                     }
                 }
-            }
-        })
+            })
 
-        mainTl.to([heroSection, '.hero-pin-wrapper'], {
-            backgroundColor: 'transparent',
-            duration: 1
-        }, 0)
-
-        // Animate hero section height on mobile (from 120vh to 65vh)
-        if (isMobile) {
-            mainTl.to(heroSection, {
-                height: '65vh',
-                duration: 1,
-                ease: 'none'
+            mainTl.to([heroSection, '.hero-pin-wrapper'], {
+                backgroundColor: 'transparent',
+                duration: 1
             }, 0)
+
+            // Animate hero section height on mobile (from 120vh to 65vh)
+            if (isMobile) {
+                mainTl.to(heroSection, {
+                    height: '65vh',
+                    duration: 1,
+                    ease: 'none'
+                }, 0)
+            }
+
+            if (heroSlider) {
+                mainTl.to(heroSlider, {
+                    width: isMobile ? '100.2%' : '86%',
+                    left: isMobile ? '0%' : '7%',
+                    height: isMobile ? '55vh' : '70vh',
+                    y: isMobile ? '0vh' : '8vh',
+                    borderRadius: isMobile ? '0px' : '2px',
+                    duration: 1
+                }, 0)
+            }
+
+            if (heroLogo) {
+                mainTl.to(heroLogo, {
+                    bottom: isMobile ? '40px' : '60px',
+                    left: isMobile ? '25px' : '40px',
+                    duration: 1
+                }, 0)
+
+                const logoSpan = heroLogo.querySelector('span')
+                if (logoSpan) {
+                    mainTl.to(logoSpan, {
+                        fontSize: isMobile ? 'clamp(0.75rem, 4.25vw, 1.1rem)' : 'clamp(1.25rem, 4vw, 4.75rem)',
+                        fontWeight: '900',
+                        color: '#000000',
+                        opacity: isMobile ? 0 : 1,
+                        duration: 1
+                    }, 0)
+                }
+            }
+
+            if (heroInfoBar) mainTl.to(heroInfoBar, { opacity: 0, duration: 0.3 }, 0.2)
+            if (projectDetails) mainTl.to(projectDetails, { opacity: 1, y: 0, duration: 0.8 }, 0.4)
+
+            const overlayTexts = document.querySelectorAll('.slide-overlay-text')
+            if (overlayTexts.length > 0) mainTl.to(overlayTexts, { opacity: 1, duration: 0.5 }, 0.3)
         }
-
-        mainTl.to(heroSlider, {
-            width: isMobile ? '100.2%' : '86%',
-            left: isMobile ? '0%' : '7%',
-            height: isMobile ? '55vh' : '70vh',
-            y: isMobile ? '0vh' : '8vh',
-            borderRadius: isMobile ? '0px' : '2px',
-            duration: 1
-        }, 0)
-
-        mainTl.to(heroLogo, {
-            bottom: isMobile ? '40px' : '60px',
-            left: isMobile ? '25px' : '40px',
-            duration: 1
-        }, 0)
-
-        mainTl.to(heroLogo.querySelector('span'), {
-            fontSize: isMobile ? 'clamp(0.75rem, 4.25vw, 1.1rem)' : 'clamp(1.25rem, 4vw, 4.75rem)',
-            fontWeight: '900',
-            color: '#000000',
-            opacity: isMobile ? 0 : 1,
-            duration: 1
-        }, 0)
-
-        if (heroInfoBar) mainTl.to(heroInfoBar, { opacity: 0, duration: 0.3 }, 0.2)
-        if (projectDetails) mainTl.to(projectDetails, { opacity: 1, y: 0, duration: 0.8 }, 0.4)
-
-        const overlayTexts = document.querySelectorAll('.slide-overlay-text')
-        if (overlayTexts.length > 0) mainTl.to(overlayTexts, { opacity: 1, duration: 0.5 }, 0.3)
     })
 
     // GLOBAL HEADER BEHAVIOR
@@ -93,23 +102,25 @@ export function initScrollAnimations(slider) {
             const isScrollingDown = self.direction === 1
             const scrollY = window.scrollY
             const isAtTop = scrollY < 50
+            const isAboutPage = document.body.classList.contains('about-page')
 
             const burgerLines = burgerBtn.querySelectorAll('.line')
-
             const navLinks = header.querySelectorAll('.desktop-nav a, .btn-contact')
 
             if (isAtTop) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
                 gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
-                gsap.to(navLinks, { color: '#ffffff', duration: 0.1 })
+
+                const topColor = isAboutPage ? '#000000' : '#ffffff'
+                gsap.to(navLinks, { color: topColor, duration: 0.1 })
                 if (!navOverlay.classList.contains('active')) {
-                    gsap.to(burgerLines, { background: '#ffffff', duration: 0.1 })
+                    gsap.to(burgerLines, { background: topColor, duration: 0.1 })
                 }
             } else if (isScrollingDown) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
                 gsap.to([desktopNav, contactBtn], { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
                 // Если мы скроллим вниз и ушли от Hero, гамбургер должен быть черным
-                if (scrollY > window.innerHeight * 0.8) {
+                if (scrollY > window.innerHeight * 0.8 || isAboutPage) {
                     gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
                 }
             } else {
@@ -332,6 +343,96 @@ export function initScrollAnimations(slider) {
         mm.add("(max-width: 768px)", () => {
             magneticBtn.removeEventListener('mousemove', moveBtn)
             magneticBtn.removeEventListener('mouseleave', resetBtn)
+        })
+    }
+
+    // =============================================
+    // ABOUT PAGE SPECIFIC ANIMATIONS
+    // =============================================
+    if (document.body.classList.contains('about-page')) {
+        // 1. Hero Entrance
+        const heroTl = gsap.timeline({ delay: 0.5 })
+
+        // Initial state set in CSS (reveal-hero has opacity 0, y 30)
+        heroTl.to('.reveal-hero', {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            stagger: 0.2,
+            ease: 'expo.out'
+        })
+
+        // Specific animation for the main logo if needed
+        const mainLogo = document.querySelector('.hero-main-logo span')
+        if (mainLogo) {
+            gsap.from(mainLogo, {
+                scale: 1.1,
+                letterSpacing: '0.1em',
+                duration: 2,
+                ease: 'power4.out',
+                delay: 0.6
+            })
+        }
+
+        // 1b. Sticky Logo Pinning (only logo stays)
+        ScrollTrigger.create({
+            trigger: '.about-hero',
+            start: 'top top',
+            endTrigger: '.about-spread',
+            end: 'bottom top',
+            pin: '.about-hero-center',
+            pinSpacing: false,
+            scrub: true
+        })
+
+        // 1c. Fade out elements as they scroll away (optional but looks better)
+        gsap.to('.about-hero-top-left, .about-hero-bottom-right, .scroll-hint', {
+            opacity: 0,
+            y: -100,
+            scrollTrigger: {
+                trigger: '.about-hero',
+                start: '20% top',
+                end: '80% top',
+                scrub: true
+            }
+        })
+
+        // 2. Horizontal Image Spread
+        const spreadSection = document.querySelector('.about-spread')
+        const spreadTrack = document.querySelector('.about-spread-track')
+
+        if (spreadSection && spreadTrack) {
+            const scrollWidth = spreadTrack.offsetWidth - window.innerWidth + (window.innerWidth * 0.1) // 10% safety margin
+
+            gsap.to(spreadTrack, {
+                x: () => -scrollWidth,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: spreadSection,
+                    start: 'top top',
+                    end: () => `+=${scrollWidth}`,
+                    pin: true,
+                    scrub: 1,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true
+                }
+            })
+        }
+
+        // 3. Concept Section Reveals
+        const conceptElements = document.querySelectorAll('.concept-lead, .concept-content')
+        conceptElements.forEach(el => {
+            gsap.fromTo(el,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1.5, ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 90%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            )
         })
     }
 }
