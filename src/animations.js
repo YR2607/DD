@@ -255,96 +255,8 @@ export function initScrollAnimations(slider) {
         }
     })
 
-    // CONTACT PORTAL & MAGNETIC EFFECT
-    const portal = document.querySelector('.contact-portal')
-    if (portal) {
-        const magneticBtn = portal.querySelector('.portal-magnetic-btn')
-        const btnText = magneticBtn.querySelector('.btn-text')
-        const btnCircle = magneticBtn.querySelector('.btn-circle')
-
-        // Magnetic effect logic
-        const moveBtn = (e) => {
-            const rect = magneticBtn.getBoundingClientRect()
-            const centerX = rect.left + rect.width / 2
-            const centerY = rect.top + rect.height / 2
-            const moveX = (e.clientX - centerX) * 0.4
-            const moveY = (e.clientY - centerY) * 0.4
-
-            gsap.to(magneticBtn, {
-                x: moveX,
-                y: moveY,
-                duration: 0.6,
-                ease: 'power2.out'
-            })
-
-            gsap.to([btnText, btnCircle], {
-                x: moveX * 0.3,
-                y: moveY * 0.3,
-                duration: 0.6,
-                ease: 'power2.out'
-            })
-        }
-
-        const resetBtn = () => {
-            gsap.to([magneticBtn, btnText, btnCircle], {
-                x: 0,
-                y: 0,
-                duration: 0.8,
-                ease: 'elastic.out(1, 0.3)'
-            })
-        }
-
-        magneticBtn.addEventListener('mousemove', moveBtn)
-        magneticBtn.addEventListener('mouseleave', resetBtn)
-
-        // MAGNETIC WAVES (Text Displacement)
-        const portalTitle = portal.querySelector('.portal-title')
-        const moveTitle = (e) => {
-            const rect = portal.getBoundingClientRect()
-            const centerX = rect.left + rect.width / 2
-            const centerY = rect.top + rect.height / 2
-            const moveX = (e.clientX - centerX) * 0.05
-            const moveY = (e.clientY - centerY) * 0.05
-
-            gsap.to(portalTitle, {
-                x: moveX,
-                y: moveY,
-                duration: 1.2,
-                ease: 'power2.out'
-            })
-        }
-
-        const resetTitle = () => {
-            gsap.to(portalTitle, {
-                x: 0, y: 0,
-                duration: 1.5,
-                ease: 'elastic.out(1, 0.3)'
-            })
-        }
-
-        portal.addEventListener('mousemove', moveTitle)
-        portal.addEventListener('mouseleave', resetTitle)
-
-        // 4. Split Text Animation for Portal Title
-        gsap.from('.portal-title .char', {
-            opacity: 0,
-            y: 40,
-            rotateX: -20,
-            stagger: 0.015,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.portal-title',
-                start: 'top 95%'
-            }
-        })
-
-        // MatchMedia for mobile (disable magnetic on touch)
-        mm.add("(max-width: 768px)", () => {
-            magneticBtn.removeEventListener('mousemove', moveBtn)
-            magneticBtn.removeEventListener('mouseleave', resetBtn)
-        })
-    }
+    // Contact portal animations (shared across pages)
+    initPortalAnimations()
 
     // =============================================
     // ABOUT PAGE SPECIFIC ANIMATIONS
@@ -499,4 +411,74 @@ export function initScrollAnimations(slider) {
             })
         }
     }
+}
+
+export function initPortalAnimations() {
+    const mm = gsap.matchMedia()
+    const portal = document.querySelector('.contact-portal')
+    if (!portal) return
+
+    const magneticBtn = portal.querySelector('.portal-magnetic-btn')
+    if (!magneticBtn) return
+
+    const btnText = magneticBtn.querySelector('.btn-text')
+    const btnCircle = magneticBtn.querySelector('.btn-circle')
+
+    const moveBtn = (e) => {
+        const rect = magneticBtn.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        const moveX = (e.clientX - centerX) * 0.4
+        const moveY = (e.clientY - centerY) * 0.4
+
+        gsap.to(magneticBtn, {
+            x: moveX, y: moveY,
+            duration: 0.6, ease: 'power2.out'
+        })
+        gsap.to([btnText, btnCircle], {
+            x: moveX * 0.3, y: moveY * 0.3,
+            duration: 0.6, ease: 'power2.out'
+        })
+    }
+
+    const resetBtn = () => {
+        gsap.to([magneticBtn, btnText, btnCircle], {
+            x: 0, y: 0,
+            duration: 0.8, ease: 'elastic.out(1, 0.3)'
+        })
+    }
+
+    magneticBtn.addEventListener('mousemove', moveBtn)
+    magneticBtn.addEventListener('mouseleave', resetBtn)
+
+    const portalTitle = portal.querySelector('.portal-title')
+    if (portalTitle) {
+        const moveTitle = (e) => {
+            const rect = portal.getBoundingClientRect()
+            const centerX = rect.left + rect.width / 2
+            const centerY = rect.top + rect.height / 2
+            const moveX = (e.clientX - centerX) * 0.05
+            const moveY = (e.clientY - centerY) * 0.05
+
+            gsap.to(portalTitle, {
+                x: moveX, y: moveY,
+                duration: 1.2, ease: 'power2.out'
+            })
+        }
+
+        const resetTitle = () => {
+            gsap.to(portalTitle, {
+                x: 0, y: 0,
+                duration: 1.5, ease: 'elastic.out(1, 0.3)'
+            })
+        }
+
+        portal.addEventListener('mousemove', moveTitle)
+        portal.addEventListener('mouseleave', resetTitle)
+    }
+
+    mm.add("(max-width: 768px)", () => {
+        magneticBtn.removeEventListener('mousemove', moveBtn)
+        magneticBtn.removeEventListener('mouseleave', resetBtn)
+    })
 }
