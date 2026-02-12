@@ -402,17 +402,19 @@ export function initScrollAnimations(slider) {
         const spreadTrack = document.querySelector('.about-spread-track')
 
         if (spreadSection && spreadTrack) {
-            const scrollWidth = spreadTrack.offsetWidth - window.innerWidth + (window.innerWidth * 0.1) // 10% safety margin
+            const isMobileDevice = window.innerWidth <= 768
+            const scrollWidth = spreadTrack.offsetWidth - window.innerWidth + (window.innerWidth * 0.1)
+            const endDistance = isMobileDevice ? scrollWidth * 0.5 : scrollWidth
 
             gsap.to(spreadTrack, {
                 x: () => -scrollWidth,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: spreadSection,
-                    start: 'top top',
-                    end: () => `+=${scrollWidth}`,
+                    start: isMobileDevice ? 'top 10%' : 'top top',
+                    end: () => `+=${endDistance}`,
                     pin: true,
-                    scrub: 1,
+                    scrub: isMobileDevice ? 0.5 : 1,
                     anticipatePin: 1,
                     invalidateOnRefresh: true
                 }
@@ -434,5 +436,67 @@ export function initScrollAnimations(slider) {
                 }
             )
         })
+
+        // 4. Style Section (Split Title) Animations
+        const styleSection = document.querySelector('.about-style')
+        if (styleSection) {
+            const counterTrack = styleSection.querySelector('.style-counter-track')
+            const styleItems = styleSection.querySelectorAll('.style-item')
+            const sectionTitle = styleSection.querySelector('.style-section-title')
+
+            // Reveal section title
+            gsap.fromTo(sectionTitle,
+                { y: 30, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: styleSection,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            )
+
+            // Each style item: reveal + counter update
+            styleItems.forEach((item, index) => {
+                // Fade in each item
+                gsap.fromTo(item,
+                    { y: 40, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                )
+
+                // Update counter when item enters center of viewport
+                if (counterTrack) {
+                    ScrollTrigger.create({
+                        trigger: item,
+                        start: 'top 50%',
+                        end: 'bottom 50%',
+                        onEnter: () => {
+                            const counterHeight = counterTrack.querySelector('span').offsetHeight
+                            gsap.to(counterTrack, {
+                                y: -index * counterHeight,
+                                duration: 0.6,
+                                ease: 'power3.out'
+                            })
+                        },
+                        onEnterBack: () => {
+                            const counterHeight = counterTrack.querySelector('span').offsetHeight
+                            gsap.to(counterTrack, {
+                                y: -index * counterHeight,
+                                duration: 0.6,
+                                ease: 'power3.out'
+                            })
+                        }
+                    })
+                }
+            })
+        }
     }
 }
