@@ -8,6 +8,7 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 about: resolve(__dirname, 'about/index.html'),
                 works: resolve(__dirname, 'works/index.html'),
+                company: resolve(__dirname, 'company/index.html'),
             },
         },
     },

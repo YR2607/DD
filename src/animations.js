@@ -95,6 +95,9 @@ export function initScrollAnimations(slider) {
     })
 
     // GLOBAL HEADER BEHAVIOR
+    // isInnerPage = any page except Home (About, Company, Works, etc.)
+    const isInnerPage = !document.getElementById('hero-section')
+
     ScrollTrigger.create({
         start: 'top top',
         end: 'bottom bottom',
@@ -102,30 +105,48 @@ export function initScrollAnimations(slider) {
             const isScrollingDown = self.direction === 1
             const scrollY = window.scrollY
             const isAtTop = scrollY < 50
-            const isAboutPage = document.body.classList.contains('about-page')
 
             const burgerLines = burgerBtn.querySelectorAll('.line')
+            const headerCenter = header.querySelector('.header-center')
+            const headerRight = header.querySelector('.header-right')
             const navLinks = header.querySelectorAll('.desktop-nav a, .btn-contact')
 
+            // IF HOME PAGE (Don't touch hiding logic)
+            if (!isInnerPage) {
+                if (isAtTop) {
+                    gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
+                    gsap.to(navLinks, { color: '#ffffff', duration: 0.1 })
+                    if (!navOverlay.classList.contains('active')) {
+                        gsap.to(burgerLines, { background: '#ffffff', duration: 0.1 })
+                    }
+                } else {
+                    gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
+                    gsap.to(navLinks, { color: '#000000', duration: 0.1 })
+                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
+                }
+                return;
+            }
+
+            // IF INNER PAGE (Hide on scroll down, show on scroll up)
             if (isAtTop) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
-                gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+                if (headerCenter) gsap.to(headerCenter, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+                if (headerRight) gsap.to(headerRight, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
 
-                const topColor = isAboutPage ? '#000000' : '#ffffff'
-                gsap.to(navLinks, { color: topColor, duration: 0.1 })
+                gsap.to(navLinks, { color: '#000000', duration: 0.1 })
                 if (!navOverlay.classList.contains('active')) {
-                    gsap.to(burgerLines, { background: topColor, duration: 0.1 })
+                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
                 }
             } else if (isScrollingDown) {
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
-                gsap.to([desktopNav, contactBtn], { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
-                // Если мы скроллим вниз и ушли от Hero, гамбургер должен быть черным
-                if (scrollY > window.innerHeight * 0.8 || isAboutPage) {
-                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
-                }
+                if (headerCenter) gsap.to(headerCenter, { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
+                if (headerRight) gsap.to(headerRight, { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
+                gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
             } else {
                 gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
-                gsap.to([desktopNav, contactBtn], { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+                if (headerCenter) gsap.to(headerCenter, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+                if (headerRight) gsap.to(headerRight, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
+
                 gsap.to(navLinks, { color: '#000000', duration: 0.1 })
                 gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
             }

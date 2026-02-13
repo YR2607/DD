@@ -96,6 +96,92 @@ function initWorksPage() {
   initPortalAnimations()
 }
 
+function initCompanyPage() {
+  // Hero reveal (same as About page)
+  const heroReveals = document.querySelectorAll('.reveal-hero')
+  heroReveals.forEach((el) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 }
+    )
+  })
+
+  // Logo scale animation
+  const mainLogo = document.querySelector('.co-hero-logo span')
+  if (mainLogo) {
+    gsap.from(mainLogo, {
+      scale: 1.1,
+      letterSpacing: '0.1em',
+      duration: 2,
+      ease: 'power4.out',
+      delay: 0.6
+    })
+  }
+
+  // Sticky Logo Pinning (logo stays until co-location)
+  ScrollTrigger.create({
+    trigger: '.co-hero',
+    start: 'top top',
+    endTrigger: '.co-location',
+    end: 'top top',
+    pin: '.co-hero-center',
+    pinSpacing: false,
+    scrub: true
+  })
+
+  // Fade out hero elements as user scrolls
+  gsap.to('.co-hero-top-left, .co-hero-bottom-right, .co-hero .scroll-hint', {
+    opacity: 0,
+    y: -100,
+    scrollTrigger: {
+      trigger: '.co-hero',
+      start: '20% top',
+      end: '80% top',
+      scrub: true
+    }
+  })
+
+  // Reveal all .co-reveal elements with scroll trigger
+  const reveals = document.querySelectorAll('.co-reveal')
+  reveals.forEach((el) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+        once: true
+      }
+    })
+  })
+
+  // Animated number counters
+  const numberValues = document.querySelectorAll('.co-number-value')
+  numberValues.forEach((el) => {
+    const target = parseInt(el.dataset.target, 10)
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(el, {
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: function () {
+            const progress = this.progress()
+            el.textContent = Math.round(target * progress)
+          }
+        })
+      }
+    })
+  })
+
+  // Portal animations
+  initPortalAnimations()
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Smooth scroll
   const lenis = initScroller()
@@ -103,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Preloader
   const preloader = document.getElementById('preloader')
   const isWorksPage = document.body.classList.contains('works-page')
+  const isCompanyPage = document.body.classList.contains('company-page')
+  const isSimplePage = isWorksPage || isCompanyPage
 
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -114,13 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
       // 3. Init components based on page
       initNavigation(lenis)
 
+      let slider;
+      if (!isWorksPage && !isCompanyPage && !document.body.classList.contains('about-page')) {
+        slider = initHeroSlider(lenis)
+      }
+
       if (isWorksPage) {
         initWorksPage()
-      } else {
-        const slider = initHeroSlider(lenis)
-        initScrollAnimations(slider)
+      } else if (isCompanyPage) {
+        initCompanyPage()
       }
-    }, isWorksPage ? 300 : 800)
+
+      // Always init scroll animations for global header behavior
+      initScrollAnimations(slider)
+    }, isSimplePage ? 300 : 800)
   })
 })
 
