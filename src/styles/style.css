@@ -24,9 +24,10 @@
   height: 100%;
   z-index: 9000;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  animation: grain 8s steps(10) infinite;
+  animation: grain 8s steps(6) infinite;
+  will-change: transform;
 }
 
 @keyframes grain {
@@ -155,7 +156,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .preloader.fade-out {
@@ -315,20 +316,7 @@ body.menu-open .main-header {
   background: #000 !important;
 }
 
-.desktop-nav ul {
-  display: flex;
-  gap: 40px;
-}
-
-.desktop-nav a {
-  font-size: 0.85rem;
-  font-family: var(--font-primary);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #fff;
-  transition: var(--transition-fast);
-}
+/* Duplicate rules removed - see below */
 
 .desktop-nav a:hover,
 .desktop-nav a.nav-active {
@@ -336,12 +324,13 @@ body.menu-open .main-header {
 }
 
 .btn-contact {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-family: var(--font-primary);
-  font-weight: 500;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   color: #fff;
+  transition: var(--transition-fast);
 }
 
 .desktop-nav ul {
@@ -362,16 +351,6 @@ body.menu-open .main-header {
 .desktop-nav a:hover,
 .desktop-nav a.nav-active {
   opacity: 0.5;
-}
-
-.btn-contact {
-  font-size: 1.1rem;
-  font-family: var(--font-primary);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #fff;
-  transition: var(--transition-fast);
 }
 
 .btn-contact:hover {
@@ -406,9 +385,9 @@ body.menu-open .main-header {
   width: 100%;
   height: 100%;
   background: #f2f2f1;
-  /* Premium light grey from reference */
   transform: translateY(-100%);
-  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
 }
 
 .nav-overlay.active .nav-bg {
@@ -428,7 +407,7 @@ body.menu-open .main-header {
   flex-direction: column;
   justify-content: space-between;
   opacity: 0;
-  transition: opacity 0.6s 0.4s ease;
+  transition: opacity 0.4s 0.2s ease;
 }
 
 .nav-header-menu {
@@ -610,7 +589,7 @@ body.menu-open .main-header {
   opacity: 0;
   visibility: hidden;
   clip-path: inset(0 0 0 0);
-  /* Prepared for mask animation */
+  will-change: clip-path, transform, opacity;
 }
 
 .hero-slide.active {
@@ -640,6 +619,7 @@ body.menu-open .main-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  will-change: transform;
 }
 
 .slide-overlay-text {
@@ -992,7 +972,8 @@ body.menu-open .main-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s var(--easing-smooth);
+  transition: transform 0.6s var(--easing-smooth);
+  will-change: transform;
 }
 
 .card-inner:hover .card-image img {
@@ -1578,7 +1559,7 @@ body.menu-open .main-header {
   height: 100%;
   object-fit: cover;
   transform: scale(1.2);
-  /* Initial zoom for parallax */
+  will-change: transform;
 }
 
 .about-caption {
@@ -2427,7 +2408,8 @@ body.menu-open .main-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .spread-item:hover img {
@@ -2695,7 +2677,8 @@ body.menu-open .main-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .works-project-card:hover .works-card-image-wrap img {
@@ -3433,5 +3416,28 @@ body.menu-open .main-header {
 
   .co-hero-logo {
     font-size: clamp(2rem, 12vw, 4rem);
+  }
+}
+
+/* =============================================
+   ACCESSIBILITY: Reduced Motion
+============================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .film-grain {
+    display: none;
+  }
+
+  .scroll-progress {
+    display: none;
   }
 }

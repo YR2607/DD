@@ -1,0 +1,156 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+    bodyClass?: string;
+}
+
+const { title, description = "Aesthetic architecture and interior design", bodyClass = "" } = Astro.props;
+import "../styles/style.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<!-- Favicon will be in public/ -->
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <slot name="head" />
+	</head>
+	<body class={`is-loading ${bodyClass}`}>
+		<!-- Film Grain Overlay -->
+		<div class="film-grain"></div>
+
+		<!-- Preloader -->
+		<div id="preloader" class="preloader">
+			<div class="preloader-content">
+				<div class="preloader-logo">
+					<span>ASPECTMOBILI</span>
+				</div>
+				<div class="preloader-progress">
+					<div class="preloader-bar"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Header -->
+		<header id="header" class="main-header">
+			<div class="container-fluid header-content">
+				<div class="header-left">
+					<button class="burger-menu" id="burger-btn" aria-label="Menu">
+						<span class="line"></span>
+						<span class="line"></span>
+					</button>
+				</div>
+
+				<div class="header-center">
+					<nav class="desktop-nav">
+						<ul>
+							<li><a href="/" class={bodyClass === '' ? 'nav-active' : ''}>Home</a></li>
+							<li><a href="/works/" class={bodyClass === 'works-page' ? 'nav-active' : ''}>Works</a></li>
+							<li><a href="/about/" class={bodyClass === 'about-page' ? 'nav-active' : ''}>About</a></li>
+							<li><a href="/company/" class={bodyClass === 'company-page' ? 'nav-active' : ''}>Company</a></li>
+						</ul>
+					</nav>
+				</div>
+
+				<div class="header-right">
+					<a href="/contact/" class="btn-contact btn-magnetic">Contact</a>
+				</div>
+			</div>
+		</header>
+
+		<!-- Navigation Overlay -->
+		<nav class="nav-overlay" id="nav-overlay">
+			<div class="nav-bg"></div>
+			<div class="nav-container">
+				<div class="nav-header-menu">
+					<div class="menu-logo">aspectmobili</div>
+				</div>
+				<div class="nav-main">
+					<div class="nav-about-col">
+						<span class="nav-about-label">(About)</span>
+						<p class="nav-about-text">aspectmobili, a grand project by HITOBA DESIGN, a spatial design company, to enrich people and places together with our clients.</p>
+						<a href="/contact/" class="nav-about-link">Contact about office</a>
+					</div>
+					<div class="nav-links-col">
+						<ul class="nav-links">
+							<li><a href="/" data-text="Home">Home</a></li>
+							<li><a href="/works/" data-text="Works">Works</a></li>
+							<li><a href="/about/" data-text="About">About</a></li>
+							<li><a href="/company/" data-text="Company">Company</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="nav-footer">
+					<div class="social-links">
+						<a href="#">Instagram</a>
+						<a href="#">Facebook</a>
+					</div>
+					<div class="nav-info">
+						<a href="#">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<main id="app">
+			<slot />
+		</main>
+
+		<!-- Scroll Progress Bar -->
+		<div class="scroll-progress" id="scroll-progress"></div>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<div class="container-fluid">
+				<div class="footer-nav-row">
+					<nav class="footer-links">
+						<a href="/">Home</a>
+						<a href="/works/">Works</a>
+						<a href="/about/">About</a>
+						<a href="/company/">Company</a>
+					</nav>
+					<div class="footer-contact">
+						<a href="/contact/">Contact</a>
+					</div>
+				</div>
+
+				<div class="footer-middle-row">
+					<div class="footer-socials">
+						<a href="#">— Facebook</a>
+						<a href="#">— Instagram</a>
+					</div>
+				</div>
+
+				<div class="footer-bottom-row">
+					<div class="footer-big-logo">aspectmobili</div>
+					<div class="footer-info-group">
+						<div class="footer-legal">
+							<p>&copy;2025 HITOBA DESIGN</p>
+							<p>Address: 205 Quest Court Harajuku 3-59-4 Sendagaya, Shibuya-ku, Tokyo</p>
+						</div>
+						<div class="footer-policy">
+							<a href="#">Privacy Policy</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../scripts/main.js"></script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--font-heading: 'Outfit', sans-serif;
+		--font-body: 'Outfit', sans-serif;
+	}
+</style>

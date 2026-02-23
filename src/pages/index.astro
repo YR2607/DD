@@ -1,0 +1,401 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="aspectmobili by HITOBA DESIGN | Tokyo Office Design & Layout" description="Tokyo's leading office design and layout agency focusing on productivity and branding.">
+    <!-- Big Logo Text (Fixed) -->
+    <div class="hero-logo-text" id="hero-logo">
+      <span>aspectmobili</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-pin-wrapper">
+        <!-- Hero Slider -->
+        <div class="hero-slider" id="hero-slider">
+          <!-- Slide 1 -->
+          <div class="hero-slide active" data-index="0" data-title="NTT DATA INTELLILINK" data-area="3206m2"
+            data-year="2024">
+            <div class="slide-image-wrapper">
+              <img src="/work1.png" alt="NTT DATA INTELLILINK Corporation" class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="hero-slide" data-index="1" data-title="SocioFuture, Ltd." data-area="3967m2" data-year="2025">
+            <div class="slide-image-wrapper">
+              <img src="/work2.png" alt="SocioFuture, Ltd." class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hero-slide" data-index="2" data-title="FUJIMOTO INC." data-area="1500m2" data-year="2023">
+            <div class="slide-image-wrapper">
+              <img src="/work1.png" alt="FUJIMOTO INC." class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="hero-slide" data-index="3" data-title="e-dash Co., Ltd." data-area="1200m2" data-year="2024">
+            <div class="slide-image-wrapper">
+              <img src="/work2.png" alt="e-dash Co., Ltd." class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="hero-slide" data-index="4" data-title="Digital Garage" data-area="2500m2" data-year="2023">
+            <div class="slide-image-wrapper">
+              <img src="/work1.png" alt="Digital Garage" class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+
+          <!-- Slide 6 -->
+          <div class="hero-slide" data-index="5" data-title="Mitsui & Co." data-area="4500m2" data-year="2024">
+            <div class="slide-image-wrapper">
+              <img src="/work2.png" alt="Mitsui & Co." class="slide-img">
+              <div class="slide-overlay-text">See Detail</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Info Bar (Centered with Line) -->
+        <div class="hero-info-bar" id="hero-info-bar">
+          <div class="info-container">
+            <div class="info-line-wrapper">
+              <div class="info-horizontal-line">
+                <div class="info-progress-bar" id="info-progress-bar"></div>
+              </div>
+            </div>
+            <div class="info-content-container">
+              <div class="info-left">
+                <div class="counter-wrap overflow-hidden">
+                  <span class="slide-counter"><span id="current-slide">1</span> / <span
+                      id="total-slides">2</span></span>
+                </div>
+                <div class="title-wrap overflow-hidden">
+                  <span class="project-name" id="project-name">NTT DATA INTELLILINK</span>
+                </div>
+              </div>
+              <div class="info-right">
+                <div class="link-wrap overflow-hidden">
+                  <a href="#" class="see-detail-link" id="see-work-detail">See Work Detail</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- After Scroll: Project Details (Now inside pin-wrapper) -->
+        <div class="project-details-container" id="project-details">
+          <div class="project-details-content">
+            <div class="project-title-area">
+              <h2 class="project-main-title" id="detail-title">NTT DATA INTELLILINK</h2>
+            </div>
+            <div class="project-meta-area">
+              <div class="meta-row-group">
+                <div class="meta-block">
+                  <span class="meta-label">Area</span>
+                  <span class="meta-value" id="detail-area">3206m2</span>
+                </div>
+                <div class="meta-block">
+                  <span class="meta-label">Completion</span>
+                  <span class="meta-value" id="detail-year">2024</span>
+                </div>
+              </div>
+              <div class="meta-tags">
+                <span>Office Design</span>
+                <span>Branding</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scroll Arrow -->
+        <div class="scroll-arrow" id="scroll-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Works Showcase -->
+    <section class="works-showcase">
+      <div class="container">
+
+        <div class="works-grid">
+          <!-- Project 1 -->
+          <article class="work-card reveal">
+            <a href="/works/project-1/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work1.png" alt="NTT DATA INTELLILINK">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">NTT DATA INTELLILINK</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">3206m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2024</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Branding</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="work-card reveal">
+            <a href="/works/project-2/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work2.png" alt="SocioFuture, Ltd.">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">SocioFuture, Ltd.</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">3967m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2025</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Branding</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="work-card reveal">
+            <a href="/works/project-3/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work1.png" alt="FUJIMOTO INC.">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">FUJIMOTO INC.</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">1500m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2023</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Consulting</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="work-card reveal">
+            <a href="/works/project-4/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work2.png" alt="e-dash Co., Ltd.">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">e-dash Co., Ltd.</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">1200m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2024</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Branding</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="work-card reveal">
+            <a href="/works/project-5/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work1.png" alt="Digital Garage">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">Digital Garage</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">2500m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2023</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Branding</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 6 -->
+          <article class="work-card reveal">
+            <a href="/works/project-6/" class="card-inner">
+              <div class="card-image-box">
+                <div class="card-image">
+                  <img src="/work2.png" alt="Mitsui & Co.">
+                </div>
+              </div>
+              <div class="card-info-external">
+                <div class="info-left">
+                  <h3 class="card-title">Mitsui & Co.</h3>
+                </div>
+                <div class="info-right">
+                  <div class="meta-row-group">
+                    <div class="meta-row">
+                      <span class="label">Area</span>
+                      <span class="value">4500m2</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="label">Completion</span>
+                      <span class="value">2024</span>
+                    </div>
+                  </div>
+                  <div class="meta-tags">
+                    <span>Office Design</span>
+                    <span>Consulting</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <div class="view-all-container">
+          <a href="/works/" class="btn-view-all">
+            <span class="btn-text">See All Works</span>
+            <span class="arrow">&#8595;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architectural About Section -->
+    <section class="about-architectural section-padding" id="about-architectural">
+      <div class="container">
+        <!-- Block 01 -->
+        <div class="about-row">
+          <div class="about-grid">
+            <div class="about-info reveal">
+              <span class="about-number">(01)</span>
+              <h2 class="about-title">Beyond Spatial Design</h2>
+              <div class="about-text-content">
+                <p class="lead">We believe that offices are not just places to work, but architectural fragments that
+                  shape culture and productivity.</p>
+                <p>Aspectmobili is a design manifest by HITOBA. We integrate minimal aesthetics with structural
+                  intelligence to create spaces that breathe and evolve with your business.</p>
+              </div>
+            </div>
+            <div class="about-visual reveal">
+              <div class="about-image-mask">
+                <img src="/about_arch.png" alt="Architectural Detail" class="about-img">
+              </div>
+              <div class="about-caption">
+                <span>FRAGMENT 205 — TOKYO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block 02 -->
+        <div class="about-row inverted">
+          <div class="about-grid">
+            <div class="about-visual reveal">
+              <div class="about-image-mask">
+                <img src="/about_arch_2.png" alt="Structural Intelligence" class="about-img">
+              </div>
+              <div class="about-caption left">
+                <span>FRAGMENT 402 — STRUCTURAL</span>
+              </div>
+            </div>
+            <div class="about-info reveal">
+              <span class="about-number">(02)</span>
+              <h2 class="about-title">Structural Intelligence</h2>
+              <div class="about-text-content">
+                <p class="lead">Complexity refined into simplicity. Our approach to structural design is rooted in the
+                  dialogue between matter and light.</p>
+                <p>We leverage advanced structural engineering to push the boundaries of what a workspace can be,
+                  ensuring durability and timeless aesthetic value in every fragment.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Portal Section -->
+    <section class="contact-portal" id="contact-portal">
+      <div class="portal-container">
+        <a href="/contact/" class="portal-link">
+          <div class="portal-content">
+            <span class="portal-tag">GET IN TOUCH</span>
+            <h2 class="portal-title">Start your<br>project</h2>
+            <div class="portal-magnetic-btn">
+              <span class="btn-circle"></span>
+              <span class="btn-text">CONTACT US</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+</Layout>

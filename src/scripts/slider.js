@@ -12,7 +12,7 @@ export function initHeroSlider(lenis) {
     const projectNameEl = document.getElementById('project-name')
 
     let currentSlideIndex = 0
-    const slideDuration = 6000
+    const slideDuration = 5000
     let progressTween
 
     if (totalSlidesEl) {
@@ -52,14 +52,14 @@ export function initHeroSlider(lenis) {
                 gsap.to(slide, {
                     clipPath: 'inset(0% 0% 0% 0%)',
                     scale: 1,
-                    duration: 1.5,
+                    duration: 1.1,
                     ease: 'power4.inOut'
                 })
 
                 if (img) {
                     gsap.fromTo(img,
                         { scale: 1.3, x: startImgX, y: startImgY },
-                        { scale: 1, x: 0, y: 0, duration: 1.8, ease: 'power3.out' }
+                        { scale: 1, x: 0, y: 0, duration: 1.3, ease: 'power3.out' }
                     )
                 }
 
@@ -67,7 +67,7 @@ export function initHeroSlider(lenis) {
                     projectNameEl.textContent = slide.dataset.title
                     gsap.fromTo(projectNameEl,
                         { y: '100%', opacity: 0 },
-                        { y: '0%', opacity: 1, duration: 1, ease: 'power3.out', delay: 0.3 }
+                        { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.15 }
                     )
                 }
 
@@ -75,7 +75,7 @@ export function initHeroSlider(lenis) {
                 if (counterLine) {
                     gsap.fromTo(counterLine,
                         { y: '-100%', opacity: 0 },
-                        { y: '0%', opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 }
+                        { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 }
                     )
                 }
 
@@ -83,7 +83,7 @@ export function initHeroSlider(lenis) {
                 if (seeDetail) {
                     gsap.fromTo(seeDetail,
                         { y: '100%', opacity: 0 },
-                        { y: '0%', opacity: 1, duration: 1, ease: 'power3.out', delay: 0.4 }
+                        { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
                     )
                 }
 
@@ -110,7 +110,7 @@ export function initHeroSlider(lenis) {
                     gsap.to(slide, {
                         scale: 0.9,
                         opacity: 0,
-                        duration: 1.5,
+                        duration: 1.1,
                         ease: 'power4.inOut',
                         onComplete: () => {
                             slide.classList.remove('active')

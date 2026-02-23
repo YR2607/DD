@@ -16,14 +16,14 @@ export function initNavigation(lenis) {
 
         if (navOverlay.classList.contains('active')) {
             lenis.stop()
-            gsap.to(burgerBtn.querySelectorAll('.line'), { background: '#000', duration: 0.3 })
+            gsap.to(burgerBtn.querySelectorAll('.line'), { background: '#000', duration: 0.2 })
         } else {
             lenis.start()
             // Режим скролла сам позаботится о цвете при следующем апдейте или мы форсируем его здесь
             const isAtTop = window.scrollY < 50
             gsap.to(burgerBtn.querySelectorAll('.line'), {
                 background: isAtTop ? '#fff' : '#000',
-                duration: 0.3
+                duration: 0.2
             })
         }
     }

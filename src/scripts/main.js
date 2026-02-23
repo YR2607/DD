@@ -1,6 +1,8 @@
-import './style.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 import { initScroller } from './scroller.js'
 import { initHeroSlider } from './slider.js'
 import { initNavigation } from './navigation.js'
@@ -72,10 +74,10 @@ function initWorksPage() {
     gsap.to(cards, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.12,
-      ease: 'power3.out',
-      delay: 0.3
+      duration: 0.6,
+      stagger: 0.1,
+      ease: 'expo.out',
+      delay: 0.2
     })
   }
 
@@ -85,10 +87,10 @@ function initWorksPage() {
     gsap.to(heroElements, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      delay: 0.1
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'expo.out',
+      delay: 0.05
     })
   }
 
@@ -192,7 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const isCompanyPage = document.body.classList.contains('company-page')
   const isSimplePage = isWorksPage || isCompanyPage
 
-  window.addEventListener('load', () => {
+  let initialized = false
+  const hidePreloader = () => {
+    if (initialized) return
+    initialized = true
+
     setTimeout(() => {
       if (preloader) {
         preloader.classList.add('fade-out')
@@ -215,7 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Always init scroll animations for global header behavior
       initScrollAnimations(slider)
-    }, isSimplePage ? 300 : 800)
+    }, isSimplePage ? 50 : 200)
+  }
+
+  // Fallback to hide preloader if load event takes too long
+  const fallbackTimeout = setTimeout(hidePreloader, 3000)
+
+  window.addEventListener('load', () => {
+    clearTimeout(fallbackTimeout)
+    hidePreloader()
   })
 })
 

@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="About | aspectmobili by HITOBA DESIGN" bodyClass="about-page">
+    <section class="about-hero" id="about-hero">
+        <div class="about-hero-top-left">
+            <h1 class="about-page-title reveal-hero">About</h1>
+        </div>
+
+        <div class="about-hero-center">
+            <div class="hero-main-logo reveal-hero">
+                <span>ASPECTMOBILI</span>
+            </div>
+        </div>
+
+        <div class="about-hero-bottom-right">
+            <div class="hero-description reveal-hero">
+                <p><strong>aspectmobili</strong> — это проект в сфере пространственного дизайна от HITOBA DESIGN, нацеленный на обогащение людей и пространств вместе с нашими клиентами.</p>
+            </div>
+        </div>
+
+        <div class="scroll-hint reveal-hero">
+            <span>Scroll</span>
+            <div class="hint-line"></div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="about-concept section-padding">
+        <div class="container">
+            <div class="concept-grid">
+                <div class="concept-lead reveal">
+                    <span class="section-number">(01)</span>
+                    <h2 class="section-title">Concept</h2>
+                    <p class="lead-text">
+                        We create spaces that are not just offices, but fragments of architectural intelligence.
+                    </p>
+                </div>
+                <div class="concept-content reveal">
+                    <p>
+                        The world of work is evolving. At aspectmobili, we believe the physical environment is a catalyst for culture.
+                        Our approach merges minimal aesthetics with structural precision, resulting in spaces that breathe and inspire.
+                    </p>
+                    <p>
+                        By focusing on "Spatial Fragments", we design components that work in harmony to support productivity and brand identity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Spread Section (Horizontal Slider) -->
+    <section class="about-spread">
+        <div class="about-spread-container">
+            <div class="about-spread-track">
+                <div class="spread-item"><img src="/about_arch.png" alt="Office Archive 1"></div>
+                <div class="spread-item"><img src="/about_arch_2.png" alt="Office Archive 2"></div>
+                <div class="spread-item"><img src="/work1.png" alt="Office Work 1"></div>
+                <div class="spread-item"><img src="/work2.png" alt="Office Work 2"></div>
+                <div class="spread-item"><img src="/work3.png" alt="Office Work 3"></div>
+                <div class="spread-item"><img src="/contact_portal.png" alt="Contact Portal Preview"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section class="about-approach section-padding">
+        <div class="container">
+            <div class="about-row">
+                <div class="about-grid">
+                    <div class="about-info reveal">
+                        <span class="about-number">(02)</span>
+                        <h2 class="about-title">Philosophy</h2>
+                        <div class="about-text-content">
+                            <p class="lead">Design is a dialogue between human needs and architectural limits.</p>
+                            <p>We leverage advanced engineering to push the boundaries of spatial possibility, ensuring every project is a timeless fragment of excellence.</p>
+                        </div>
+                    </div>
+                    <div class="about-visual reveal">
+                        <div class="about-image-mask">
+                            <img src="/about_arch.png" alt="Philosophical approach" class="about-img">
+                        </div>
+                        <div class="about-caption">
+                            <span>FRAGMENT 302 — MINIMALISM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Section (Split Title) -->
+    <section class="about-style section-padding">
+        <div class="style-wrapper">
+            <div class="style-sticky-left">
+                <h2 class="style-section-title">Style</h2>
+                <div class="style-counter">
+                    <div class="style-counter-track">
+                        <span>01</span>
+                        <span>02</span>
+                        <span>03</span>
+                    </div>
+                </div>
+            </div>
+
+            <ol class="style-items">
+                <li class="style-item" data-index="0">
+                    <span class="style-label">(Spatial Intelligence)</span>
+                    <h3 class="style-heading">Designing beyond the surface.</h3>
+                    <p class="style-body">
+                        We believe that great office design starts with understanding the people who use it.
+                        Through deep analysis of workflows, culture, and business goals, we uncover the essence of what a space truly needs to become.
+                    </p>
+                </li>
+                <li class="style-item" data-index="1">
+                    <span class="style-label">(Order Made)</span>
+                    <h3 class="style-heading">A bespoke team for every challenge.</h3>
+                    <p class="style-body">
+                        No two projects are the same. We assemble a dedicated team of designers, engineers, and craftspeople tailored to each project's unique requirements, collaborating with external artists and specialists when the vision demands it.
+                    </p>
+                </li>
+                <li class="style-item" data-index="2">
+                    <span class="style-label">(One Goal. Infinite Ways)</span>
+                    <h3 class="style-heading">One destination. Endless paths.</h3>
+                    <p class="style-body">
+                        In the creative domain, we refuse to be confined by convention. With a clear objective shared among the entire team, we explore every angle, every possibility, crafting solutions that are as inventive as they are functional.
+                    </p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="contact-portal" id="contact-portal">
+        <div class="portal-container">
+            <a href="/contact/" class="portal-link">
+                <div class="portal-content">
+                    <span class="portal-tag">GET IN TOUCH</span>
+                    <h2 class="portal-title">Start your<br>project</h2>
+                    <div class="portal-magnetic-btn">
+                        <span class="btn-circle"></span>
+                        <span class="btn-text">CONTACT US</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+</Layout>

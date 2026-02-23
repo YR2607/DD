@@ -1,6 +1,8 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
+
 /**
  * Инициализация анимаций ScrollTrigger
  * @param {Object} slider - Управление слайдером (pause/resume)
@@ -31,7 +33,7 @@ export function initScrollAnimations(slider) {
                     trigger: heroSection,
                     start: 'top top',
                     end: 'bottom bottom',
-                    scrub: 1.2,
+                    scrub: 0.6,
                     onUpdate: (self) => {
                         if (self.progress > 0.02) {
                             if (slider?.isActive?.()) slider.pause()
@@ -156,9 +158,9 @@ export function initScrollAnimations(slider) {
     const revealElements = document.querySelectorAll('.works-grid, .work-card')
     revealElements.forEach((el) => {
         gsap.fromTo(el,
-            { y: 60, scale: 0.98 },
+            { y: 50, scale: 0.98 },
             {
-                y: 0, scale: 1, duration: 1.5, ease: 'power3.out',
+                y: 0, scale: 1, duration: 1.0, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 95%',
@@ -221,13 +223,13 @@ export function initScrollAnimations(slider) {
         // Cinematic Image Reveal
         gsap.to(imageMask, {
             clipPath: 'inset(0 0% 0 0)',
-            duration: 2.5,
+            duration: 1.8,
             ease: 'power3.inOut',
             scrollTrigger: {
                 trigger: row,
                 start: 'top 90%',
                 end: 'top 40%',
-                scrub: 0.5
+                scrub: 0.4
             }
         })
 
@@ -238,18 +240,18 @@ export function initScrollAnimations(slider) {
                 trigger: row,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: true
+                scrub: 0.5
             }
         })
 
         // Content Stagger Reveal
         gsap.from([aboutNumber, aboutText], {
-            y: 30,
+            y: 25,
             opacity: 0,
-            filter: 'blur(8px)',
-            duration: 1.2,
-            stagger: 0.1,
-            ease: 'power2.out',
+            filter: 'blur(6px)',
+            duration: 1.0,
+            stagger: 0.08,
+            ease: 'expo.out',
             scrollTrigger: {
                 trigger: row,
                 start: 'top 95%',
@@ -262,11 +264,11 @@ export function initScrollAnimations(slider) {
         if (titleChars.length) {
             gsap.from(titleChars, {
                 opacity: 0,
-                y: 20,
-                filter: 'blur(5px)',
-                stagger: 0.015,
-                duration: 1,
-                ease: 'power2.out',
+                y: 15,
+                filter: 'blur(4px)',
+                stagger: 0.012,
+                duration: 0.8,
+                ease: 'expo.out',
                 scrollTrigger: {
                     trigger: row,
                     start: 'top 92%',

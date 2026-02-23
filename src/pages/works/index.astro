@@ -1,0 +1,219 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Works | aspectmobili by HITOBA DESIGN" bodyClass="works-page">
+    <section class="works-hero">
+        <div class="works-hero-inner">
+            <h1 class="works-hero-title reveal-hero">Works</h1>
+            <div class="works-filter reveal-hero">
+                <button class="works-filter-btn" id="works-filter-btn">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span>Filter</span>
+                </button>
+                <div class="works-filter-dropdown" id="works-filter-dropdown">
+                    <button class="filter-option active" data-filter="all">All Projects</button>
+                    <button class="filter-option" data-filter="office-design">Office Design</button>
+                    <button class="filter-option" data-filter="branding">Branding</button>
+                    <button class="filter-option" data-filter="consulting">Consulting</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="works-grid-section">
+        <div class="works-container">
+            <div class="works-projects-grid">
+
+                <!-- Project 1 -->
+                <article class="works-project-card" data-categories="office-design branding">
+                    <a href="/works/project-1/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work1.png" alt="NTT DATA INTELLILINK Corporation" loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">NTT DATA INTELLILINK</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">3,206m<sup>2</sup> / 970T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2024</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Branding</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="works-project-card" data-categories="office-design branding">
+                    <a href="/works/project-2/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work2.png" alt="SocioFuture, Ltd." loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">SocioFuture, Ltd.</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">3,967m<sup>2</sup> / 1,200T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2025</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Branding</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="works-project-card" data-categories="office-design consulting">
+                    <a href="/works/project-3/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work1.png" alt="FUJIMOTO INC." loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">FUJIMOTO INC.</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">1,500m<sup>2</sup> / 450T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2023</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Consulting</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="works-project-card works-card-wide" data-categories="office-design branding">
+                    <a href="/works/project-4/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work2.png" alt="e-dash Co., Ltd." loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">e-dash Co., Ltd.</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">1,200m<sup>2</sup> / 360T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2024</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Branding</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Project 5 -->
+                <article class="works-project-card works-card-wide" data-categories="office-design branding">
+                    <a href="/works/project-5/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work1.png" alt="Digital Garage" loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">Digital Garage</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">2,500m<sup>2</sup> / 750T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2023</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Branding</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Project 6 -->
+                <article class="works-project-card" data-categories="office-design consulting">
+                    <a href="/works/project-6/" class="works-card-link">
+                        <div class="works-card-image-wrap">
+                            <img src="/work2.png" alt="Mitsui &amp; Co." loading="lazy" />
+                        </div>
+                        <div class="works-card-info">
+                            <h3 class="works-card-title">Mitsui &amp; Co.</h3>
+                            <div class="works-card-meta">
+                                <div class="works-meta-details">
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Area</span>
+                                        <span class="works-meta-value">4,500m<sup>2</sup> / 1,360T</span>
+                                    </div>
+                                    <div class="works-meta-row">
+                                        <span class="works-meta-label">Completion</span>
+                                        <span class="works-meta-value">2024</span>
+                                    </div>
+                                </div>
+                                <div class="works-card-tags">
+                                    <span>Office Design</span>
+                                    <span>Consulting</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Portal Section -->
+    <section class="contact-portal" id="contact-portal">
+        <div class="portal-container">
+            <a href="/contact/" class="portal-link">
+                <div class="portal-content">
+                    <span class="portal-tag">GET IN TOUCH</span>
+                    <h2 class="portal-title">Start your<br>project</h2>
+                    <div class="portal-magnetic-btn">
+                        <span class="btn-circle"></span>
+                        <span class="btn-text">CONTACT US</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+</Layout>

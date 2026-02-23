@@ -1,24 +1,26 @@
 import Lenis from 'lenis'
+import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 /**
- * Инициализация плавного скролла Lenis
- * @returns {Lenis} Экземпляр Lenis
+ * Lenis smooth scroll, synced with GSAP ticker
+ * @returns {Lenis}
  */
 export function initScroller() {
     const lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
+        lerp: 0.1,
+        touchMultiplier: 1.5,
     })
 
-    function raf(time) {
-        lenis.raf(time)
-        requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-
     lenis.on('scroll', ScrollTrigger.update)
+
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000)
+    })
+    gsap.ticker.lagSmoothing(0)
 
     return lenis
 }
