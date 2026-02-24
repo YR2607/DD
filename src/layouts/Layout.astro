@@ -1,12 +1,29 @@
 ---
+import { getSiteSettings } from '../lib/sanity';
+import "../styles/style.css";
+
 interface Props {
-	title: string;
+	title?: string;
 	description?: string;
     bodyClass?: string;
 }
 
-const { title, description = "Aesthetic architecture and interior design", bodyClass = "" } = Astro.props;
-import "../styles/style.css";
+const settings = await getSiteSettings();
+
+const { 
+    title = settings?.title || "aspectmobili by HITOBA DESIGN", 
+    description = settings?.description || "Aesthetic architecture and interior design", 
+    bodyClass = "" 
+} = Astro.props;
+
+// Fallbacks
+const logoText = settings?.logoText || 'ASPECTMOBILI';
+const address = settings?.address || '205 Quest Court Harajuku 3-59-4 Sendagaya, Shibuya-ku, Tokyo';
+const copyright = settings?.copyright || '©2025 HITOBA DESIGN';
+const socialLinks = settings?.socialLinks || [
+    { platform: 'Facebook', url: '#' },
+    { platform: 'Instagram', url: '#' }
+];
 ---
 
 <!DOCTYPE html>
@@ -31,7 +48,7 @@ import "../styles/style.css";
 		<div id="preloader" class="preloader">
 			<div class="preloader-content">
 				<div class="preloader-logo">
-					<span>ASPECTMOBILI</span>
+					<span>{logoText}</span>
 				</div>
 				<div class="preloader-progress">
 					<div class="preloader-bar"></div>
@@ -71,12 +88,12 @@ import "../styles/style.css";
 			<div class="nav-bg"></div>
 			<div class="nav-container">
 				<div class="nav-header-menu">
-					<div class="menu-logo">aspectmobili</div>
+					<div class="menu-logo">{logoText.toLowerCase()}</div>
 				</div>
 				<div class="nav-main">
 					<div class="nav-about-col">
 						<span class="nav-about-label">(About)</span>
-						<p class="nav-about-text">aspectmobili, a grand project by HITOBA DESIGN, a spatial design company, to enrich people and places together with our clients.</p>
+						<p class="nav-about-text">{settings?.description || 'aspectmobili, a grand project by HITOBA DESIGN...'}</p>
 						<a href="/contact/" class="nav-about-link">Contact about office</a>
 					</div>
 					<div class="nav-links-col">
@@ -90,8 +107,9 @@ import "../styles/style.css";
 				</div>
 				<div class="nav-footer">
 					<div class="social-links">
-						<a href="#">Instagram</a>
-						<a href="#">Facebook</a>
+                        {socialLinks.map((link: any) => (
+                            <a href={link.url} target="_blank" rel="noopener noreferrer">{link.platform}</a>
+                        ))}
 					</div>
 					<div class="nav-info">
 						<a href="#">Privacy Policy</a>
@@ -124,17 +142,18 @@ import "../styles/style.css";
 
 				<div class="footer-middle-row">
 					<div class="footer-socials">
-						<a href="#">— Facebook</a>
-						<a href="#">— Instagram</a>
+                        {socialLinks.map((link: any) => (
+                            <a href={link.url} target="_blank" rel="noopener noreferrer">— {link.platform}</a>
+                        ))}
 					</div>
 				</div>
 
 				<div class="footer-bottom-row">
-					<div class="footer-big-logo">aspectmobili</div>
+					<div class="footer-big-logo">{logoText.toLowerCase()}</div>
 					<div class="footer-info-group">
 						<div class="footer-legal">
-							<p>&copy;2025 HITOBA DESIGN</p>
-							<p>Address: 205 Quest Court Harajuku 3-59-4 Sendagaya, Shibuya-ku, Tokyo</p>
+							<p>{copyright}</p>
+							<p>Address: {address}</p>
 						</div>
 						<div class="footer-policy">
 							<a href="#">Privacy Policy</a>

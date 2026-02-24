@@ -7,23 +7,46 @@ export const siteSettingsType = defineType({
     fields: [
         defineField({
             name: 'title',
-            title: 'Site Title',
+            title: 'Название сайта (SEO)',
+            description: 'Отображается во вкладке браузера и в поисковиках',
             type: 'string',
         }),
         defineField({
             name: 'description',
-            title: 'Site Description',
+            title: 'Описание сайта (SEO)',
+            description: 'Краткое описание сайта для поисковиков (мета-тег description)',
             type: 'text',
         }),
         defineField({
-            name: 'footerText',
-            title: 'Footer Text',
-            type: 'text',
+            name: 'logoText',
+            title: 'Текст логотипа (в шапке)',
+            description: 'Например: ASPECTMOBILI',
+            type: 'string',
         }),
         defineField({
             name: 'address',
-            title: 'Office Address',
+            title: 'Адрес офиса (в футере)',
             type: 'text',
+        }),
+        defineField({
+            name: 'copyright',
+            title: 'Копирайт (в футере)',
+            description: 'Например: ©2025 HITOBA DESIGN',
+            type: 'string',
+        }),
+        defineField({
+            name: 'socialLinks',
+            title: 'Ссылки на соцсети (в футере)',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'platform', type: 'string', title: 'Название (Facebook, Instagram)' },
+                        { name: 'url', type: 'url', title: 'Ссылка' }
+                    ]
+                }
+            ]
         }),
     ],
 })

@@ -34,6 +34,27 @@ export function initScrollAnimations(slider) {
                     start: 'top top',
                     end: 'bottom bottom',
                     scrub: 0.6,
+                    onEnter: () => {
+                        const activeSlide = document.querySelector('.hero-slide.active');
+                        if (activeSlide && activeSlide.dataset.id) {
+                            const activeId = activeSlide.dataset.id;
+                            document.querySelectorAll('.work-card').forEach(card => {
+                                if (card.dataset.id === activeId) {
+                                    card.style.display = 'none';
+                                } else {
+                                    card.style.display = 'block';
+                                }
+                            });
+                            // Optional: refresh triggers slightly after layout reflow
+                            setTimeout(() => ScrollTrigger.refresh(), 50);
+                        }
+                    },
+                    onLeaveBack: () => {
+                        document.querySelectorAll('.work-card').forEach(card => {
+                            card.style.display = 'block';
+                        });
+                        setTimeout(() => ScrollTrigger.refresh(), 50);
+                    },
                     onUpdate: (self) => {
                         if (self.progress > 0.02) {
                             if (slider?.isActive?.()) slider.pause()

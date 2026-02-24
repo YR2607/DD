@@ -1,0 +1,191 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getProject, getProjects, urlFor } from '../../lib/sanity';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project: any) => ({
+    params: { slug: project.slug.current },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${project.title} | aspectmobili`} bodyClass="project-detail-page">
+  <section class="project-hero section-padding">
+    <div class="container">
+      <div class="project-hero-inner">
+        <a href="/works/" class="back-link reveal">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M15.8333 10H4.16667M4.16667 10L10 15.8333M4.16667 10L10 4.16667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to Works</span>
+        </a>
+        
+        <h1 class="project-title reveal">{project.title}</h1>
+        
+        <div class="project-meta-grid reveal">
+          <div class="meta-item">
+            <span class="label">Area</span>
+            <span class="value">{project.area || 'TBD'}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Completion</span>
+            <span class="value">{project.completionYear || 'TBD'}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Categories</span>
+            <div class="meta-tags">
+              {project.categories?.map((cat: string) => (
+                <span>{cat}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-main-visual">
+    <div class="container-fluid">
+       <div class="main-image-wrap reveal">
+         <img 
+            src={project.mainImage ? urlFor(project.mainImage).width(2000).url() : '/placeholder.png'} 
+            alt={project.title}
+         >
+       </div>
+    </div>
+  </section>
+
+  <section class="project-description section-padding">
+    <div class="container">
+      <div class="project-desc-grid">
+        <div class="desc-left reveal">
+             <h2 class="section-title">Concept</h2>
+        </div>
+        <div class="desc-right reveal">
+            <p class="lead" set:html={project.description?.replace(/\n/g, '<br>')}></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation between projects could be added here -->
+
+  <section class="contact-portal" id="contact-portal">
+    <div class="portal-container">
+      <a href="/contact/" class="portal-link">
+        <div class="portal-content">
+          <span class="portal-tag">GET IN TOUCH</span>
+          <h2 class="portal-title">Start your<br>project</h2>
+          <div class="portal-magnetic-btn">
+            <span class="btn-circle"></span>
+            <span class="btn-text">CONTACT US</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .project-hero {
+    padding-top: 180px;
+    padding-bottom: 80px;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  .back-link:hover {
+    opacity: 1;
+  }
+  .project-title {
+    font-size: clamp(40px, 8vw, 100px);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 60px;
+  }
+  .project-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 40px;
+  }
+  .meta-item .label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 15px;
+  }
+  .meta-item .value {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .meta-tags span {
+    font-size: 14px;
+    padding: 4px 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 20px;
+  }
+  .main-image-wrap {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+  }
+  .main-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .project-desc-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 100px;
+  }
+  .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.5;
+  }
+  .lead {
+      font-size: 24px;
+      line-height: 1.6;
+      font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .project-meta-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .project-desc-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .lead {
+        font-size: 18px;
+    }
+  }
+</style>

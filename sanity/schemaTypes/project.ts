@@ -7,13 +7,15 @@ export const projectType = defineType({
     fields: [
         defineField({
             name: 'title',
-            title: 'Title',
+            title: 'Название проекта',
+            description: 'Отображается в карточках и как главный заголовок',
             type: 'string',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
             name: 'slug',
-            title: 'Slug',
+            title: 'URL адрес страницы (Slug)',
+            description: 'Нажмите Generate, чтобы создать безопасный URL из названия',
             type: 'slug',
             options: {
                 source: 'title',
@@ -23,7 +25,8 @@ export const projectType = defineType({
         }),
         defineField({
             name: 'mainImage',
-            title: 'Main image',
+            title: 'Главное изображение (Обложка)',
+            description: 'Фотография, которая будет показана в списке проектов',
             type: 'image',
             options: {
                 hotspot: true,
@@ -32,35 +35,40 @@ export const projectType = defineType({
         }),
         defineField({
             name: 'categories',
-            title: 'Categories',
+            title: 'Категории проекта',
+            description: 'Служат для фильтрации на странице Works',
             type: 'array',
             of: [{ type: 'string' }],
             options: {
                 list: [
-                    { title: 'Office Design', value: 'office-design' },
-                    { title: 'Branding', value: 'branding' },
-                    { title: 'Consulting', value: 'consulting' },
+                    { title: 'Офисный дизайн (Office Design)', value: 'office-design' },
+                    { title: 'Брендинг (Branding)', value: 'branding' },
+                    { title: 'Консалтинг (Consulting)', value: 'consulting' },
                 ],
             },
         }),
         defineField({
             name: 'area',
-            title: 'Area (m2)',
+            title: 'Площадь (Area)',
+            description: 'Например: 3206m2',
             type: 'string',
         }),
         defineField({
-            name: 'completion',
-            title: 'Completion Year',
+            name: 'completionYear',
+            title: 'Год завершения (Completion)',
+            description: 'Например: 2024',
             type: 'string',
         }),
         defineField({
             name: 'description',
-            title: 'Description',
+            title: 'Описание проекта (Concept)',
+            description: 'Основной текстовый блок на левой панели детальной страницы',
             type: 'text',
         }),
         defineField({
             name: 'publishedAt',
-            title: 'Published at',
+            title: 'Дата публикации',
+            description: 'Дата для сортировки проектов (Новые сверху)',
             type: 'datetime',
         }),
     ],

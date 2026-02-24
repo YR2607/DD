@@ -1,0 +1,24 @@
+{
+    "name": "aspectmobili-studio",
+    "private": true,
+    "version": "1.0.0",
+    "main": "package.json",
+    "devDependencies": {
+        "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "sanity": "^3.15.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "styled-components": "^6.0.7",
+        "@sanity/vision": "^3.15.0",
+        "lucide-react": "^0.263.1"
+    },
+    "scripts": {
+        "dev": "sanity dev",
+        "start": "sanity start",
+        "build": "sanity build",
+        "deploy": "sanity deploy",
+        "graphql": "sanity graphql"
+    }
+}

@@ -15,9 +15,28 @@ export function urlFor(source: any) {
 }
 
 export async function getProjects() {
-    return await client.fetch(`*[_type == "project"] | order(publishedAt desc)`)
+    return await client.fetch(`*[_type == "project"] | order(publishedAt desc) {
+        ...,
+        "id": _id
+    }`)
+}
+
+export async function getProject(slug: string) {
+    return await client.fetch(`*[_type == "project" && slug.current == $slug][0]`, { slug })
 }
 
 export async function getSiteSettings() {
     return await client.fetch(`*[_type == "siteSettings"][0]`)
+}
+
+export async function getHomePage() {
+    return await client.fetch(`*[_type == "pageHome"][0]`)
+}
+
+export async function getAboutPage() {
+    return await client.fetch(`*[_type == "pageAbout"][0]`)
+}
+
+export async function getCompanyPage() {
+    return await client.fetch(`*[_type == "pageCompany"][0]`)
 }

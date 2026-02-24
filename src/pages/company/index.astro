@@ -1,22 +1,91 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCompanyPage } from '../../lib/sanity';
+
+const companyData = await getCompanyPage();
+
+// Fallbacks
+const hero = companyData?.hero || {
+  mainTitle: 'Company',
+  logoText: 'ASPECTMOBILI',
+  description: 'Shaping the future <em>of workspace</em> — a spatial design studio crafting architectural fragments since 2018, Tokyo.'
+};
+
+const statement = companyData?.statement || {
+  number: '(01)',
+  text: 'We are a spatial design studio creating <em>architectural fragments</em> that transform how people work, connect and grow.'
+};
+
+const numbers = companyData?.numbers || [
+  { label: 'Projects Completed', value: '150', suffix: '+' },
+  { label: 'Founded', value: '2018', suffix: '' },
+  { label: 'Team Members', value: '35', suffix: '' },
+  { label: 'Client Satisfaction', value: '98', suffix: '%' }
+];
+
+const profileRows = companyData?.profileRows || [
+  { key: 'Company Name', value: 'HITOBA DESIGN Inc.' },
+  { key: 'Brand', value: 'aspectmobili' },
+  { key: 'CEO', value: 'Takeshi Yamamoto' },
+  { key: 'Founded', value: 'April 2018' },
+  { key: 'Capital', value: '10,000,000 JPY' },
+  { key: 'Employees', value: '35' },
+  { key: 'Business', value: 'Office Design / Space Planning / Interior Architecture / Branding / Consulting' },
+  { key: 'Address', value: '205 Quest Court Harajuku, 3-59-4 Sendagaya, Shibuya-ku, Tokyo 151-0051' },
+  { key: 'Phone', value: '+81 3-6455-0620' }
+];
+
+const manifesto = companyData?.manifesto || {
+    title: 'We believe workspace<br>shapes <em>culture</em>',
+    columns: [
+        { num: '01', title: 'Design Philosophy', text: 'Every space tells a story. We decode the narrative of organizations and translate it into architectural language that resonates with people who inhabit it daily.' },
+        { num: '02', title: 'Spatial Fragments', text: 'Complex environments broken into meaningful components. Each fragment designed to foster creativity, well-being, and purposeful interaction between teams.' },
+        { num: '03', title: 'Future Forward', text: 'Hybrid work demands adaptive spaces. We pioneer solutions where physical and digital realms merge, creating workplaces that evolve with their users.' }
+    ]
+};
+
+const history = companyData?.history || [
+    { year: '2018', title: 'Foundation', text: 'HITOBA DESIGN established in Shibuya, Tokyo. First project completed within 3 months of launch, setting the pace for future growth.' },
+    { year: '2019', title: 'Expansion', text: 'Team grows to 15 members. Launched the aspectmobili brand as a spatial design platform connecting architecture with human experience.' },
+    { year: '2021', title: '100 Projects Milestone', text: 'Reached 100 completed office design projects across the Tokyo metropolitan area. Recognized as a leading force in workspace transformation.' },
+    { year: '2023', title: 'Award Recognition', text: 'Multiple design awards received. Portfolio expanded to include comprehensive branding services alongside spatial design.' },
+    { year: '2025', title: 'Beyond Boundaries', text: '150+ projects completed. Pioneering sustainable and hybrid workspace solutions for the next generation of work environments.' }
+];
+
+const clients = companyData?.clients || [
+    { name: 'Toyota Motor', type: 'Office Design' },
+    { name: 'Sony Group', type: 'Creative Space' },
+    { name: 'Rakuten', type: 'Headquarters' },
+    { name: 'LINE', type: 'Innovation Lab' },
+    { name: 'Dentsu', type: 'Workspace' },
+    { name: 'NTT Data', type: 'Digital Hub' }
+];
+
+const access = companyData?.access || {
+    title: 'Access',
+    details: [
+        { label: 'Address', text: '205 Quest Court Harajuku, 3-59-4 Sendagaya, Shibuya-ku, Tokyo 151-0051, Japan' },
+        { label: 'Access', text: '5 min walk from Kitasando Station\n8 min walk from Harajuku Station' },
+        { label: 'Hours', text: 'Mon - Fri: 9:00 - 18:00\nClosed on weekends and holidays' }
+    ]
+};
 ---
 
 <Layout title="Company | aspectmobili by HITOBA DESIGN" bodyClass="company-page">
     <section class="co-hero" id="co-hero">
         <div class="co-hero-top-left">
-            <h1 class="co-page-title reveal-hero">Company</h1>
+            <h1 class="co-page-title reveal-hero">{hero.mainTitle}</h1>
         </div>
 
         <div class="co-hero-center">
             <div class="co-hero-logo reveal-hero">
-                <span>ASPECTMOBILI</span>
+                <span>{hero.logoText}</span>
             </div>
         </div>
 
         <div class="co-hero-bottom-right">
             <div class="co-hero-desc reveal-hero">
-                <p>Shaping the future <em>of workspace</em> — a spatial design studio crafting architectural fragments since 2018, Tokyo.</p>
+                <p set:html={hero.description}></p>
             </div>
         </div>
 
@@ -30,10 +99,8 @@ import Layout from '../../layouts/Layout.astro';
     <section class="co-statement section-padding">
         <div class="container">
             <div class="co-statement-inner">
-                <span class="co-section-num co-reveal">(01)</span>
-                <h2 class="co-statement-text co-reveal">
-                    We are a spatial design studio creating <em>architectural fragments</em> that transform how people work, connect and grow.
-                </h2>
+                <span class="co-section-num co-reveal">{statement.number}</span>
+                <h2 class="co-statement-text co-reveal" set:html={statement.text}></h2>
             </div>
         </div>
     </section>
@@ -42,26 +109,13 @@ import Layout from '../../layouts/Layout.astro';
     <section class="co-numbers">
         <div class="container">
             <div class="co-numbers-grid">
-                <div class="co-number-item co-reveal">
-                    <span class="co-number-value" data-target="150">0</span>
-                    <span class="co-number-suffix">+</span>
-                    <p class="co-number-label">Projects Completed</p>
-                </div>
-                <div class="co-number-item co-reveal">
-                    <span class="co-number-value" data-target="2018">0</span>
-                    <span class="co-number-suffix"></span>
-                    <p class="co-number-label">Founded</p>
-                </div>
-                <div class="co-number-item co-reveal">
-                    <span class="co-number-value" data-target="35">0</span>
-                    <span class="co-number-suffix"></span>
-                    <p class="co-number-label">Team Members</p>
-                </div>
-                <div class="co-number-item co-reveal">
-                    <span class="co-number-value" data-target="98">0</span>
-                    <span class="co-number-suffix">%</span>
-                    <p class="co-number-label">Client Satisfaction</p>
-                </div>
+                {numbers.map((item) => (
+                    <div class="co-number-item co-reveal">
+                        <span class="co-number-value" data-target={item.value}>0</span>
+                        <span class="co-number-suffix">{item.suffix}</span>
+                        <p class="co-number-label">{item.label}</p>
+                    </div>
+                ))}
             </div>
         </div>
     </section>
@@ -74,70 +128,31 @@ import Layout from '../../layouts/Layout.astro';
                 <h2 class="co-profile-title co-reveal">Company Profile</h2>
             </div>
             <div class="co-profile-table co-reveal">
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Company Name</span>
-                    <span class="co-profile-val">HITOBA DESIGN Inc.</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Brand</span>
-                    <span class="co-profile-val">aspectmobili</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">CEO</span>
-                    <span class="co-profile-val">Takeshi Yamamoto</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Founded</span>
-                    <span class="co-profile-val">April 2018</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Capital</span>
-                    <span class="co-profile-val">10,000,000 JPY</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Employees</span>
-                    <span class="co-profile-val">35</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Business</span>
-                    <span class="co-profile-val">Office Design / Space Planning / Interior Architecture / Branding / Consulting</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Address</span>
-                    <span class="co-profile-val">205 Quest Court Harajuku<br>3-59-4 Sendagaya, Shibuya-ku, Tokyo 151-0051</span>
-                </div>
-                <div class="co-profile-row">
-                    <span class="co-profile-key">Phone</span>
-                    <span class="co-profile-val">+81 3-6455-0620</span>
-                </div>
+                {profileRows.map((row) => (
+                    <div class="co-profile-row">
+                        <span class="co-profile-key">{row.key}</span>
+                        <span class="co-profile-val" set:html={row.value}></span>
+                    </div>
+                ))}
             </div>
         </div>
     </section>
 
     <!-- 05. MANIFESTO -->
-    <section class="co-manifesto">
+    <section class="co-manifesto section-padding">
         <div class="container">
-            <span class="co-section-num co-reveal">(03)</span>
             <div class="co-manifesto-grid">
                 <div class="co-manifesto-main co-reveal">
-                    <h2 class="co-manifesto-title">We believe workspace<br>shapes <em>culture</em></h2>
+                    <h2 class="co-manifesto-title" set:html={manifesto.title}></h2>
                 </div>
                 <div class="co-manifesto-cols">
-                    <div class="co-manifesto-col co-reveal">
-                        <span class="co-manifesto-num">01</span>
-                        <h3>Design Philosophy</h3>
-                        <p>Every space tells a story. We decode the narrative of organizations and translate it into architectural language that resonates with people who inhabit it daily.</p>
-                    </div>
-                    <div class="co-manifesto-col co-reveal">
-                        <span class="co-manifesto-num">02</span>
-                        <h3>Spatial Fragments</h3>
-                        <p>Complex environments broken into meaningful components. Each fragment designed to foster creativity, well-being, and purposeful interaction between teams.</p>
-                    </div>
-                    <div class="co-manifesto-col co-reveal">
-                        <span class="co-manifesto-num">03</span>
-                        <h3>Future Forward</h3>
-                        <p>Hybrid work demands adaptive spaces. We pioneer solutions where physical and digital realms merge, creating workplaces that evolve with their users.</p>
-                    </div>
+                    {manifesto.columns.map((col: any) => (
+                        <div class="co-manifesto-col co-reveal">
+                            <span class="co-manifesto-num">{col.num}</span>
+                            <h3>{col.title}</h3>
+                            <p>{col.text}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
@@ -151,46 +166,16 @@ import Layout from '../../layouts/Layout.astro';
                 <h2 class="co-timeline-title co-reveal">History</h2>
             </div>
             <div class="co-tl-list">
-                <div class="co-tl-entry co-reveal">
-                    <div class="co-tl-year-big">2018</div>
-                    <div class="co-tl-sep"></div>
-                    <div class="co-tl-body">
-                        <h3>Foundation</h3>
-                        <p>HITOBA DESIGN established in Shibuya, Tokyo. First project completed within 3 months of launch, setting the pace for future growth.</p>
+                {history.map((entry) => (
+                    <div class="co-tl-entry co-reveal">
+                        <div class="co-tl-year-big">{entry.year}</div>
+                        <div class="co-tl-sep"></div>
+                        <div class="co-tl-body">
+                            <h3>{entry.title}</h3>
+                            <p>{entry.text}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="co-tl-entry co-reveal">
-                    <div class="co-tl-year-big">2019</div>
-                    <div class="co-tl-sep"></div>
-                    <div class="co-tl-body">
-                        <h3>Expansion</h3>
-                        <p>Team grows to 15 members. Launched the aspectmobili brand as a spatial design platform connecting architecture with human experience.</p>
-                    </div>
-                </div>
-                <div class="co-tl-entry co-reveal">
-                    <div class="co-tl-year-big">2021</div>
-                    <div class="co-tl-sep"></div>
-                    <div class="co-tl-body">
-                        <h3>100 Projects Milestone</h3>
-                        <p>Reached 100 completed office design projects across the Tokyo metropolitan area. Recognized as a leading force in workspace transformation.</p>
-                    </div>
-                </div>
-                <div class="co-tl-entry co-reveal">
-                    <div class="co-tl-year-big">2023</div>
-                    <div class="co-tl-sep"></div>
-                    <div class="co-tl-body">
-                        <h3>Award Recognition</h3>
-                        <p>Multiple design awards received. Portfolio expanded to include comprehensive branding services alongside spatial design.</p>
-                    </div>
-                </div>
-                <div class="co-tl-entry co-reveal">
-                    <div class="co-tl-year-big">2025</div>
-                    <div class="co-tl-sep"></div>
-                    <div class="co-tl-body">
-                        <h3>Beyond Boundaries</h3>
-                        <p>150+ projects completed. Pioneering sustainable and hybrid workspace solutions for the next generation of work environments.</p>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     </section>
@@ -203,54 +188,12 @@ import Layout from '../../layouts/Layout.astro';
                 <h2 class="co-clients-title co-reveal">Clients</h2>
             </div>
             <div class="co-clients-grid">
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Toyota Motor</span>
-                    <span class="co-client-type">Office Design</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Sony Group</span>
-                    <span class="co-client-type">Creative Space</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Rakuten</span>
-                    <span class="co-client-type">Headquarters</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">LINE</span>
-                    <span class="co-client-type">Innovation Lab</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Dentsu</span>
-                    <span class="co-client-type">Workspace</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">NTT Data</span>
-                    <span class="co-client-type">Digital Hub</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Mitsubishi Estate</span>
-                    <span class="co-client-type">Showroom</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">SoftBank</span>
-                    <span class="co-client-type">Co-working Space</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Shiseido</span>
-                    <span class="co-client-type">Brand Space</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Nomura Securities</span>
-                    <span class="co-client-type">Executive Floor</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">CyberAgent</span>
-                    <span class="co-client-type">Creative Office</span>
-                </div>
-                <div class="co-client-item co-reveal">
-                    <span class="co-client-name">Recruit Holdings</span>
-                    <span class="co-client-type">Flex Space</span>
-                </div>
+                {clients.map((client) => (
+                    <div class="co-client-item co-reveal">
+                        <span class="co-client-name">{client.name}</span>
+                        <span class="co-client-type">{client.type}</span>
+                    </div>
+                ))}
             </div>
         </div>
     </section>
@@ -259,8 +202,8 @@ import Layout from '../../layouts/Layout.astro';
     <section class="co-location section-padding">
         <div class="container">
             <div class="co-location-header">
-                <span class="co-section-num co-reveal">(05)</span>
-                <h2 class="co-location-title co-reveal">Access</h2>
+                <span class="co-section-num co-reveal">{statement.number === '(01)' ? '(05)' : '(06)'}</span>
+                <h2 class="co-location-title co-reveal">{access.title}</h2>
             </div>
             <div class="co-location-content co-reveal">
                 <div class="co-map-wrap">
@@ -270,18 +213,12 @@ import Layout from '../../layouts/Layout.astro';
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="co-location-details">
-                    <div class="co-loc-item">
-                        <span class="co-loc-label">Address</span>
-                        <p>205 Quest Court Harajuku<br>3-59-4 Sendagaya, Shibuya-ku<br>Tokyo 151-0051, Japan</p>
-                    </div>
-                    <div class="co-loc-item">
-                        <span class="co-loc-label">Access</span>
-                        <p>5 min walk from Kitasando Station<br>8 min walk from Harajuku Station</p>
-                    </div>
-                    <div class="co-loc-item">
-                        <span class="co-loc-label">Hours</span>
-                        <p>Mon - Fri: 9:00 - 18:00<br>Closed on weekends and holidays</p>
-                    </div>
+                    {access.details.map((detail) => (
+                        <div class="co-loc-item">
+                            <span class="co-loc-label">{detail.label}</span>
+                            <p>{detail.text}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
@@ -292,7 +229,7 @@ import Layout from '../../layouts/Layout.astro';
             <a href="/contact/" class="portal-link">
                 <div class="portal-content">
                     <span class="portal-tag">GET IN TOUCH</span>
-                    <h2 class="portal-title">Start your<br>project</h2>
+                    <h2 class="portal-title" set:html="Start your<br>project"></h2>
                     <div class="portal-magnetic-btn">
                         <span class="btn-circle"></span>
                         <span class="btn-text">CONTACT US</span>
