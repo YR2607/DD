@@ -1,8 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getProjects, urlFor } from '../../lib/sanity';
+import { getProjects, getWorksPage, urlFor } from '../../lib/sanity';
 
 const projects = await getProjects();
+const worksData = await getWorksPage();
+
+// SEO
+const metaTitle = worksData?.metaTitle || 'Works | aspectmobili by HITOBA DESIGN';
+const metaDescription = worksData?.metaDescription || '';
+
+// Hero
+const heroTitle = worksData?.heroTitle || 'Works';
+const filterAllLabel = worksData?.filterAllLabel || 'All Projects';
 
 // Extract unique categories for filter
 const allCategories = projects.flatMap(p => p.categories || []);
@@ -12,10 +21,10 @@ const uniqueCategories = [...new Set(allCategories)];
 const sortedProjects = [...projects].sort((a, b) => (b.completionYear || 0) - (a.completionYear || 0));
 ---
 
-<Layout title="Works | aspectmobili by HITOBA DESIGN" bodyClass="works-page">
+<Layout title={metaTitle} description={metaDescription} bodyClass="works-page">
     <section class="works-hero">
         <div class="works-hero-inner">
-            <h1 class="works-hero-title reveal-hero">Works</h1>
+            <h1 class="works-hero-title reveal-hero">{heroTitle}</h1>
             <div class="works-filter reveal-hero">
                 <button class="works-filter-btn" id="works-filter-btn">
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
@@ -25,7 +34,7 @@ const sortedProjects = [...projects].sort((a, b) => (b.completionYear || 0) - (a
                     <span>Filter</span>
                 </button>
                 <div class="works-filter-dropdown" id="works-filter-dropdown">
-                    <button class="filter-option active" data-filter="all">All Projects</button>
+                    <button class="filter-option active" data-filter="all">{filterAllLabel}</button>
                     {uniqueCategories.map((cat) => (
                         <button class="filter-option" data-filter={cat.toLowerCase().replace(/\s+/g, '-')}>{cat}</button>
                     ))}

@@ -1,61 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getHomePage, getProjects, urlFor } from '../lib/sanity';
+import { getHomePage, getProjects, getSiteSettings, urlFor } from '../lib/sanity';
 
 const homeData = await getHomePage();
 const projects = await getProjects();
+const settings = await getSiteSettings();
+
+// SEO
+const metaTitle = homeData?.metaTitle || settings?.title || 'aspectmobili by HITOBA DESIGN | Tokyo Office Design & Layout';
+const metaDescription = homeData?.metaDescription || settings?.description || "Tokyo's leading office design and layout agency focusing on productivity and branding.";
 
 // Fallbacks
 const heroLogoText = homeData?.heroLogoText || 'aspectmobili';
-const heroSlides = homeData?.heroSlides || [
-  { 
-    title: 'NTT DATA INTELLILINK', 
-    area: '3206m2', 
-    year: '2024', 
-    image: '/work1.png',
-    projectLink: '/works/project-1/'
-  },
-  { 
-    title: 'SocioFuture, Ltd.', 
-    area: '3967m2', 
-    year: '2025', 
-    image: '/work2.png',
-    projectLink: '/works/project-2/'
-  }
-];
+const aboutSections = homeData?.aboutSections || [];
 
-const aboutSections = homeData?.aboutSections || [
-  {
-    number: '(01)',
-    title: 'Beyond Spatial Design',
-    leadText: 'We believe that offices are not just places to work, but architectural fragments that shape culture and productivity.',
-    bodyText: 'Aspectmobili is a design manifest by HITOBA. We integrate minimal aesthetics with structural intelligence to create spaces that breathe and evolve with your business.',
-    image: '/about_arch.png',
-    caption: 'FRAGMENT 205 — TOKYO',
-    inverted: false
-  },
-  {
-    number: '(02)',
-    title: 'Structural Intelligence',
-    leadText: 'Complexity refined into simplicity. Our approach to structural design is rooted in the dialogue between matter and light.',
-    bodyText: 'We leverage advanced structural engineering to push the boundaries of what a workspace can be, ensuring durability and timeless aesthetic value in every fragment.',
-    image: '/about_arch_2.png',
-    caption: 'FRAGMENT 402 — STRUCTURAL',
-    inverted: true
-  }
-];
-
-const contactPortal = homeData?.contactPortal || {
+const contactPortal = settings?.contactPortal || {
   tag: 'GET IN TOUCH',
-  title: 'Start your project',
-  btnText: 'CONTACT US'
+  title: 'Start your<br>project',
+  btnText: 'CONTACT US',
+  link: '/contact/'
 };
 
 // Featured projects for the showcase (take first 6 or from CMS)
 const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
 ---
 
-<Layout title="aspectmobili by HITOBA DESIGN | Tokyo Office Design & Layout" description="Tokyo's leading office design and layout agency focusing on productivity and branding.">
+<Layout title={metaTitle} description={metaDescription}>
     <!-- Big Logo Text (Fixed) -->
     <div class="hero-logo-text" id="hero-logo">
       <span>{heroLogoText}</span>
@@ -266,7 +236,7 @@ const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
     <!-- Contact Portal Section -->
     <section class="contact-portal" id="contact-portal">
       <div class="portal-container">
-        <a href="/contact/" class="portal-link">
+        <a href={contactPortal.link || '/contact/'} class="portal-link">
           <div class="portal-content">
             <span class="portal-tag">{contactPortal.tag}</span>
             <h2 class="portal-title" set:html={contactPortal.title}></h2>

@@ -4,6 +4,11 @@ export const pageHomeType = defineType({
     name: 'pageHome',
     title: 'Home Page',
     type: 'document',
+    groups: [
+        { name: 'seo', title: 'SEO' },
+        { name: 'hero', title: 'Hero', default: true },
+        { name: 'about', title: 'About Blocks' },
+    ],
     fields: [
         defineField({
             name: 'title',
@@ -12,17 +17,37 @@ export const pageHomeType = defineType({
             initialValue: 'Home Page',
             readOnly: true,
         }),
+
+        // --- SEO ---
+        defineField({
+            name: 'metaTitle',
+            title: 'SEO Title',
+            description: 'Заголовок страницы для браузера и поисковиков',
+            type: 'string',
+            group: 'seo',
+        }),
+        defineField({
+            name: 'metaDescription',
+            title: 'SEO Description',
+            description: 'Описание страницы для поисковиков',
+            type: 'text',
+            group: 'seo',
+        }),
+
+        // --- HERO ---
         defineField({
             name: 'heroLogoText',
             title: 'Огромный текст на фоне (Hero Logo)',
             description: 'Анимированный текст на главной (по умолчанию aspectmobili)',
             type: 'string',
+            group: 'hero',
         }),
         defineField({
             name: 'heroSlides',
             title: 'Слайдер проектов на главном экране (Hero)',
             description: 'Слайды с фотографиями и ссылками на лучшие проекты',
             type: 'array',
+            group: 'hero',
             of: [
                 {
                     type: 'object',
@@ -31,16 +56,22 @@ export const pageHomeType = defineType({
                         { name: 'title', type: 'string', title: 'Название проекта' },
                         { name: 'area', type: 'string', title: 'Площадь (Area)' },
                         { name: 'year', type: 'string', title: 'Год завершения' },
-                        { name: 'projectLink', type: 'url', title: 'Ссылка на проект (вида /works/nasvanie-proekta)' }
-                    ]
-                }
-            ]
+                        { name: 'projectLink', type: 'url', title: 'Ссылка на проект (вида /works/nasvanie-proekta)' },
+                    ],
+                    preview: {
+                        select: { title: 'title', subtitle: 'year', media: 'image' },
+                    },
+                },
+            ],
         }),
+
+        // --- ABOUT BLOCKS ---
         defineField({
             name: 'aboutSections',
             title: 'Секции о компании (About Blocks)',
             description: 'Текстовые блоки с архитектурными изображениями на главной',
             type: 'array',
+            group: 'about',
             of: [
                 {
                     type: 'object',
@@ -51,21 +82,13 @@ export const pageHomeType = defineType({
                         { name: 'bodyText', type: 'text', title: 'Основной текст параграфа' },
                         { name: 'image', type: 'image', title: 'Фотография блока', options: { hotspot: true } },
                         { name: 'caption', type: 'string', title: 'Подпись под фото (Например: FRAGMENT 205)' },
-                        { name: 'inverted', type: 'boolean', title: 'Инвертировать расположение? (Фото слева, текст справа)' }
-                    ]
-                }
-            ]
+                        { name: 'inverted', type: 'boolean', title: 'Инвертировать расположение? (Фото слева, текст справа)' },
+                    ],
+                    preview: {
+                        select: { title: 'title', subtitle: 'number', media: 'image' },
+                    },
+                },
+            ],
         }),
-        defineField({
-            name: 'contactPortal',
-            title: 'Блок связи (Footer Portal)',
-            description: 'Большая секция "START YOUR PROJECT" внизу страницы',
-            type: 'object',
-            fields: [
-                { name: 'tag', type: 'string', title: 'Маленький тег (Например: GET IN TOUCH)' },
-                { name: 'title', type: 'string', title: 'Главный заголовок (можно использовать <br> для переноса)' },
-                { name: 'btnText', type: 'string', title: 'Текст на кнопке (Например: CONTACT US)' }
-            ]
-        })
-    ]
+    ],
 })

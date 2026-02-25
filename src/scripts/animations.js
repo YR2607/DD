@@ -134,38 +134,31 @@ export function initScrollAnimations(slider) {
             const headerRight = header.querySelector('.header-right')
             const navLinks = header.querySelectorAll('.desktop-nav a, .btn-contact')
 
-            // IF HOME PAGE (Don't touch hiding logic)
-            if (!isInnerPage) {
-                if (isAtTop) {
-                    gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
-                    gsap.to(navLinks, { color: '#ffffff', duration: 0.1 })
-                    if (!navOverlay.classList.contains('active')) {
-                        gsap.to(burgerLines, { background: '#ffffff', duration: 0.1 })
-                    }
-                } else {
-                    gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
-                    gsap.to(navLinks, { color: '#000000', duration: 0.1 })
-                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
-                }
-                return;
-            }
-
-            // IF INNER PAGE (Hide on scroll down, show on scroll up)
+            // CONSOLIDATED HEADER BEHAVIOR (Hide on scroll down, show on scroll up)
             if (isAtTop) {
+                // State at TOP: Transparent background
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
+
+                // Color depends on page type (Home = White text, Inner = Black text)
+                const textColor = isInnerPage ? '#000000' : '#ffffff'
+                gsap.to(navLinks, { color: textColor, duration: 0.1 })
+                if (!navOverlay.classList.contains('active')) {
+                    gsap.to(burgerLines, { background: textColor, duration: 0.1 })
+                }
+
+                // Ensure visibility
                 if (headerCenter) gsap.to(headerCenter, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
                 if (headerRight) gsap.to(headerRight, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
-
-                gsap.to(navLinks, { color: '#000000', duration: 0.1 })
-                if (!navOverlay.classList.contains('active')) {
-                    gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
-                }
             } else if (isScrollingDown) {
+                // State SCROLLING DOWN: Hide everything except burger
                 gsap.to(header, { backgroundColor: 'transparent', backdropFilter: 'blur(0px)', duration: 0.4, overwrite: true })
                 if (headerCenter) gsap.to(headerCenter, { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
                 if (headerRight) gsap.to(headerRight, { opacity: 0, visibility: 'hidden', y: -20, duration: 0.4, overwrite: true })
+
+                // Burger is always visible but turns dark if not at top
                 gsap.to(burgerLines, { background: '#000000', duration: 0.1 })
             } else {
+                // State SCROLLING UP: Show white header with black text
                 gsap.to(header, { backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(12px)', duration: 0.4, overwrite: true })
                 if (headerCenter) gsap.to(headerCenter, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })
                 if (headerRight) gsap.to(headerRight, { opacity: 1, visibility: 'visible', y: 0, duration: 0.4, overwrite: true })

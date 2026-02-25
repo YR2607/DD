@@ -19,11 +19,21 @@ const {
 // Fallbacks
 const logoText = settings?.logoText || 'ASPECTMOBILI';
 const address = settings?.address || '205 Quest Court Harajuku 3-59-4 Sendagaya, Shibuya-ku, Tokyo';
-const copyright = settings?.copyright || '©2025 HITOBA DESIGN';
+const copyright = settings?.copyright || '2025 HITOBA DESIGN';
 const socialLinks = settings?.socialLinks || [
     { platform: 'Facebook', url: '#' },
     { platform: 'Instagram', url: '#' }
 ];
+const aboutText = settings?.aboutText || 'aspectmobili, a grand project by HITOBA DESIGN, a spatial design company, to enrich people and places together with our clients.';
+const privacyPolicyUrl = settings?.privacyPolicyUrl || '#';
+const contactPortal = settings?.contactPortal || {
+    tag: 'GET IN TOUCH',
+    title: 'Start your<br>project',
+    btnText: 'CONTACT US',
+    link: '/contact/'
+};
+const email = settings?.email || '';
+const phone = settings?.phone || '';
 ---
 
 <!DOCTYPE html>
@@ -33,7 +43,6 @@ const socialLinks = settings?.socialLinks || [
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
 		<title>{title}</title>
-		<!-- Favicon will be in public/ -->
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -78,7 +87,7 @@ const socialLinks = settings?.socialLinks || [
 				</div>
 
 				<div class="header-right">
-					<a href="/contact/" class="btn-contact btn-magnetic">Contact</a>
+					<a href={contactPortal.link || '/contact/'} class="btn-contact btn-magnetic">Contact</a>
 				</div>
 			</div>
 		</header>
@@ -93,8 +102,8 @@ const socialLinks = settings?.socialLinks || [
 				<div class="nav-main">
 					<div class="nav-about-col">
 						<span class="nav-about-label">(About)</span>
-						<p class="nav-about-text">{settings?.description || 'aspectmobili, a grand project by HITOBA DESIGN...'}</p>
-						<a href="/contact/" class="nav-about-link">Contact about office</a>
+						<p class="nav-about-text">{aboutText}</p>
+						<a href={contactPortal.link || '/contact/'} class="nav-about-link">Contact about office</a>
 					</div>
 					<div class="nav-links-col">
 						<ul class="nav-links">
@@ -112,7 +121,7 @@ const socialLinks = settings?.socialLinks || [
                         ))}
 					</div>
 					<div class="nav-info">
-						<a href="#">Privacy Policy</a>
+						<a href={privacyPolicyUrl}>Privacy Policy</a>
 					</div>
 				</div>
 			</div>
@@ -136,7 +145,7 @@ const socialLinks = settings?.socialLinks || [
 						<a href="/company/">Company</a>
 					</nav>
 					<div class="footer-contact">
-						<a href="/contact/">Contact</a>
+						<a href={contactPortal.link || '/contact/'}>Contact</a>
 					</div>
 				</div>
 
@@ -156,7 +165,7 @@ const socialLinks = settings?.socialLinks || [
 							<p>Address: {address}</p>
 						</div>
 						<div class="footer-policy">
-							<a href="#">Privacy Policy</a>
+							<a href={privacyPolicyUrl}>Privacy Policy</a>
 						</div>
 					</div>
 				</div>

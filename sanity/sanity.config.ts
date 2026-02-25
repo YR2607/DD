@@ -3,10 +3,9 @@ import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
-// Настройка кастомного бокового меню (Desk Structure)
 const deskStructure = (S: any) =>
     S.list()
-        .title('Меню сайта')
+        .title('Menu')
         .items([
             // 1. Home
             S.listItem()
@@ -17,11 +16,26 @@ const deskStructure = (S: any) =>
                         .documentId('pageHome')
                 ),
 
-            // 2. Works (Проекты)
+            // 2. Works (Projects)
             S.listItem()
                 .title('Works')
-                .schemaType('project')
-                .child(S.documentTypeList('project').title('Works (Проекты)')),
+                .child(
+                    S.list()
+                        .title('Works')
+                        .items([
+                            S.listItem()
+                                .title('Works Page Settings')
+                                .child(
+                                    S.document()
+                                        .schemaType('pageWorks')
+                                        .documentId('pageWorks')
+                                ),
+                            S.listItem()
+                                .title('All Projects')
+                                .schemaType('project')
+                                .child(S.documentTypeList('project').title('All Projects')),
+                        ])
+                ),
 
             // 3. About
             S.listItem()
@@ -41,9 +55,9 @@ const deskStructure = (S: any) =>
                         .documentId('pageCompany')
                 ),
 
-            // 5. Contact & Settings (Глобальные настройки)
+            // 5. Site Settings
             S.listItem()
-                .title('Contact & Settings')
+                .title('Site Settings')
                 .child(
                     S.document()
                         .schemaType('siteSettings')
@@ -55,7 +69,7 @@ export default defineConfig({
     name: 'default',
     title: 'aspectmobili',
 
-    projectId: 'nw2y6nmp', // My Sanity Project ID
+    projectId: 'nw2y6nmp',
     dataset: 'production',
 
     plugins: [

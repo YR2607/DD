@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getProject, getProjects, urlFor } from '../../lib/sanity';
+import { getProject, getProjects, getSiteSettings, urlFor } from '../../lib/sanity';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -11,10 +11,20 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const settings = await getSiteSettings();
 
 if (!project) {
   return Astro.redirect('/404');
 }
+
+const contactPortal = settings?.contactPortal || {
+  tag: 'GET IN TOUCH',
+  title: 'Start your<br>project',
+  btnText: 'CONTACT US',
+  link: '/contact/'
+};
+
+const gallery = project.gallery || [];
 ---
 
 <Layout title={`${project.title} | aspectmobili`} bodyClass="project-detail-page">
@@ -47,6 +57,18 @@ if (!project) {
               ))}
             </div>
           </div>
+          {project.client && (
+            <div class="meta-item">
+              <span class="label">Client</span>
+              <span class="value">{project.client}</span>
+            </div>
+          )}
+          {project.location && (
+            <div class="meta-item">
+              <span class="label">Location</span>
+              <span class="value">{project.location}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -76,17 +98,57 @@ if (!project) {
     </div>
   </section>
 
-  <!-- Navigation between projects could be added here -->
+  <!-- Project Gallery -->
+  {gallery.length > 0 && (
+    <section class="project-gallery section-padding">
+      <div class="container">
+        <div class="gallery-grid">
+          {gallery.map((img: any) => (
+            <div class="gallery-item reveal">
+              <img 
+                src={urlFor(img).width(1400).url()} 
+                alt={img.caption || project.title}
+                loading="lazy"
+              >
+              {img.caption && (
+                <p class="gallery-caption">{img.caption}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Services -->
+  {project.services && project.services.length > 0 && (
+    <section class="project-services section-padding">
+      <div class="container">
+        <div class="project-desc-grid">
+          <div class="desc-left reveal">
+            <h2 class="section-title">Services</h2>
+          </div>
+          <div class="desc-right reveal">
+            <div class="services-list">
+              {project.services.map((service: string) => (
+                <span class="service-tag">{service}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="contact-portal" id="contact-portal">
     <div class="portal-container">
-      <a href="/contact/" class="portal-link">
+      <a href={contactPortal.link || '/contact/'} class="portal-link">
         <div class="portal-content">
-          <span class="portal-tag">GET IN TOUCH</span>
-          <h2 class="portal-title">Start your<br>project</h2>
+          <span class="portal-tag">{contactPortal.tag}</span>
+          <h2 class="portal-title" set:html={contactPortal.title}></h2>
           <div class="portal-magnetic-btn">
             <span class="btn-circle"></span>
-            <span class="btn-text">CONTACT US</span>
+            <span class="btn-text">{contactPortal.btnText}</span>
           </div>
         </div>
       </a>
@@ -175,6 +237,42 @@ if (!project) {
       font-weight: 300;
   }
 
+  /* Gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .gallery-caption {
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .gallery-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Services */
+  .services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .service-tag {
+    font-size: 16px;
+    padding: 8px 20px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 30px;
+    font-weight: 400;
+  }
+
   @media (max-width: 768px) {
     .project-meta-grid {
       grid-template-columns: 1fr;
@@ -186,6 +284,9 @@ if (!project) {
     }
     .lead {
         font-size: 18px;
+    }
+    .gallery-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -2,10 +2,10 @@ import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
 export const client = createClient({
-    projectId: import.meta.env.SANITY_PROJECT_ID || 'your-project-id',
+    projectId: import.meta.env.SANITY_PROJECT_ID || 'nw2y6nmp',
     dataset: import.meta.env.SANITY_DATASET || 'production',
-    useCdn: true, // set to `false` to bypass the edge cache
-    apiVersion: '2023-05-03', // use current date (YYYY-MM-DD) to target the latest API version
+    useCdn: true,
+    apiVersion: '2023-05-03',
 })
 
 const builder = imageUrlBuilder(client)
@@ -39,4 +39,8 @@ export async function getAboutPage() {
 
 export async function getCompanyPage() {
     return await client.fetch(`*[_type == "pageCompany"][0]`)
+}
+
+export async function getWorksPage() {
+    return await client.fetch(`*[_type == "pageWorks"][0]`)
 }

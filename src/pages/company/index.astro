@@ -1,77 +1,59 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCompanyPage } from '../../lib/sanity';
+import { getCompanyPage, getSiteSettings } from '../../lib/sanity';
 
 const companyData = await getCompanyPage();
+const settings = await getSiteSettings();
+
+// SEO
+const metaTitle = companyData?.metaTitle || 'Company | aspectmobili by HITOBA DESIGN';
+const metaDescription = companyData?.metaDescription || settings?.description || '';
 
 // Fallbacks
 const hero = companyData?.hero || {
   mainTitle: 'Company',
   logoText: 'ASPECTMOBILI',
-  description: 'Shaping the future <em>of workspace</em> — a spatial design studio crafting architectural fragments since 2018, Tokyo.'
+  description: ''
 };
 
 const statement = companyData?.statement || {
   number: '(01)',
-  text: 'We are a spatial design studio creating <em>architectural fragments</em> that transform how people work, connect and grow.'
+  text: ''
 };
 
-const numbers = companyData?.numbers || [
-  { label: 'Projects Completed', value: '150', suffix: '+' },
-  { label: 'Founded', value: '2018', suffix: '' },
-  { label: 'Team Members', value: '35', suffix: '' },
-  { label: 'Client Satisfaction', value: '98', suffix: '%' }
-];
-
-const profileRows = companyData?.profileRows || [
-  { key: 'Company Name', value: 'HITOBA DESIGN Inc.' },
-  { key: 'Brand', value: 'aspectmobili' },
-  { key: 'CEO', value: 'Takeshi Yamamoto' },
-  { key: 'Founded', value: 'April 2018' },
-  { key: 'Capital', value: '10,000,000 JPY' },
-  { key: 'Employees', value: '35' },
-  { key: 'Business', value: 'Office Design / Space Planning / Interior Architecture / Branding / Consulting' },
-  { key: 'Address', value: '205 Quest Court Harajuku, 3-59-4 Sendagaya, Shibuya-ku, Tokyo 151-0051' },
-  { key: 'Phone', value: '+81 3-6455-0620' }
-];
+const numbers = companyData?.numbers || [];
+const profileRows = companyData?.profileRows || [];
+const profileSectionTitle = companyData?.profileSectionTitle || 'Company Profile';
 
 const manifesto = companyData?.manifesto || {
-    title: 'We believe workspace<br>shapes <em>culture</em>',
-    columns: [
-        { num: '01', title: 'Design Philosophy', text: 'Every space tells a story. We decode the narrative of organizations and translate it into architectural language that resonates with people who inhabit it daily.' },
-        { num: '02', title: 'Spatial Fragments', text: 'Complex environments broken into meaningful components. Each fragment designed to foster creativity, well-being, and purposeful interaction between teams.' },
-        { num: '03', title: 'Future Forward', text: 'Hybrid work demands adaptive spaces. We pioneer solutions where physical and digital realms merge, creating workplaces that evolve with their users.' }
-    ]
+    title: '',
+    columns: []
 };
 
-const history = companyData?.history || [
-    { year: '2018', title: 'Foundation', text: 'HITOBA DESIGN established in Shibuya, Tokyo. First project completed within 3 months of launch, setting the pace for future growth.' },
-    { year: '2019', title: 'Expansion', text: 'Team grows to 15 members. Launched the aspectmobili brand as a spatial design platform connecting architecture with human experience.' },
-    { year: '2021', title: '100 Projects Milestone', text: 'Reached 100 completed office design projects across the Tokyo metropolitan area. Recognized as a leading force in workspace transformation.' },
-    { year: '2023', title: 'Award Recognition', text: 'Multiple design awards received. Portfolio expanded to include comprehensive branding services alongside spatial design.' },
-    { year: '2025', title: 'Beyond Boundaries', text: '150+ projects completed. Pioneering sustainable and hybrid workspace solutions for the next generation of work environments.' }
-];
+const historySectionTitle = companyData?.historySectionTitle || 'History';
+const history = companyData?.history || [];
 
-const clients = companyData?.clients || [
-    { name: 'Toyota Motor', type: 'Office Design' },
-    { name: 'Sony Group', type: 'Creative Space' },
-    { name: 'Rakuten', type: 'Headquarters' },
-    { name: 'LINE', type: 'Innovation Lab' },
-    { name: 'Dentsu', type: 'Workspace' },
-    { name: 'NTT Data', type: 'Digital Hub' }
-];
+const clientsSectionTitle = companyData?.clientsSectionTitle || 'Clients';
+const clients = companyData?.clients || [];
 
 const access = companyData?.access || {
     title: 'Access',
-    details: [
-        { label: 'Address', text: '205 Quest Court Harajuku, 3-59-4 Sendagaya, Shibuya-ku, Tokyo 151-0051, Japan' },
-        { label: 'Access', text: '5 min walk from Kitasando Station\n8 min walk from Harajuku Station' },
-        { label: 'Hours', text: 'Mon - Fri: 9:00 - 18:00\nClosed on weekends and holidays' }
-    ]
+    googleMapsUrl: '',
+    details: []
 };
+
+const contactPortal = settings?.contactPortal || {
+  tag: 'GET IN TOUCH',
+  title: 'Start your<br>project',
+  btnText: 'CONTACT US',
+  link: '/contact/'
+};
+
+// Google Maps URL fallback
+const mapsUrl = access.googleMapsUrl || settings?.googleMapsUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.5!2d139.7075!3d35.6815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQwJzUzLjQiTiAxMznCsDQyJzI3LjAiRQ!5e0!3m2!1sja!2sjp!4v1700000000000';
 ---
 
-<Layout title="Company | aspectmobili by HITOBA DESIGN" bodyClass="company-page">
+<Layout title={metaTitle} description={metaDescription} bodyClass="company-page">
     <section class="co-hero" id="co-hero">
         <div class="co-hero-top-left">
             <h1 class="co-page-title reveal-hero">{hero.mainTitle}</h1>
@@ -96,124 +78,136 @@ const access = companyData?.access || {
     </section>
 
     <!-- 02. STATEMENT -->
-    <section class="co-statement section-padding">
-        <div class="container">
-            <div class="co-statement-inner">
-                <span class="co-section-num co-reveal">{statement.number}</span>
-                <h2 class="co-statement-text co-reveal" set:html={statement.text}></h2>
+    {statement.text && (
+        <section class="co-statement section-padding">
+            <div class="container">
+                <div class="co-statement-inner">
+                    <span class="co-section-num co-reveal">{statement.number}</span>
+                    <h2 class="co-statement-text co-reveal" set:html={statement.text}></h2>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    )}
 
     <!-- 03. NUMBERS -->
-    <section class="co-numbers">
-        <div class="container">
-            <div class="co-numbers-grid">
-                {numbers.map((item) => (
-                    <div class="co-number-item co-reveal">
-                        <span class="co-number-value" data-target={item.value}>0</span>
-                        <span class="co-number-suffix">{item.suffix}</span>
-                        <p class="co-number-label">{item.label}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-
-    <!-- 04. COMPANY PROFILE TABLE -->
-    <section class="co-profile section-padding">
-        <div class="container">
-            <div class="co-profile-header">
-                <span class="co-section-num co-reveal">(02)</span>
-                <h2 class="co-profile-title co-reveal">Company Profile</h2>
-            </div>
-            <div class="co-profile-table co-reveal">
-                {profileRows.map((row) => (
-                    <div class="co-profile-row">
-                        <span class="co-profile-key">{row.key}</span>
-                        <span class="co-profile-val" set:html={row.value}></span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-
-    <!-- 05. MANIFESTO -->
-    <section class="co-manifesto section-padding">
-        <div class="container">
-            <div class="co-manifesto-grid">
-                <div class="co-manifesto-main co-reveal">
-                    <h2 class="co-manifesto-title" set:html={manifesto.title}></h2>
-                </div>
-                <div class="co-manifesto-cols">
-                    {manifesto.columns.map((col: any) => (
-                        <div class="co-manifesto-col co-reveal">
-                            <span class="co-manifesto-num">{col.num}</span>
-                            <h3>{col.title}</h3>
-                            <p>{col.text}</p>
+    {numbers.length > 0 && (
+        <section class="co-numbers">
+            <div class="container">
+                <div class="co-numbers-grid">
+                    {numbers.map((item) => (
+                        <div class="co-number-item co-reveal">
+                            <span class="co-number-value" data-target={item.value}>0</span>
+                            <span class="co-number-suffix">{item.suffix}</span>
+                            <p class="co-number-label">{item.label}</p>
                         </div>
                     ))}
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    )}
+
+    <!-- 04. COMPANY PROFILE TABLE -->
+    {profileRows.length > 0 && (
+        <section class="co-profile section-padding">
+            <div class="container">
+                <div class="co-profile-header">
+                    <span class="co-section-num co-reveal">(02)</span>
+                    <h2 class="co-profile-title co-reveal">{profileSectionTitle}</h2>
+                </div>
+                <div class="co-profile-table co-reveal">
+                    {profileRows.map((row) => (
+                        <div class="co-profile-row">
+                            <span class="co-profile-key">{row.key}</span>
+                            <span class="co-profile-val" set:html={row.value}></span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <!-- 05. MANIFESTO -->
+    {manifesto.columns && manifesto.columns.length > 0 && (
+        <section class="co-manifesto section-padding">
+            <div class="container">
+                <div class="co-manifesto-grid">
+                    <div class="co-manifesto-main co-reveal">
+                        <h2 class="co-manifesto-title" set:html={manifesto.title}></h2>
+                    </div>
+                    <div class="co-manifesto-cols">
+                        {manifesto.columns.map((col: any) => (
+                            <div class="co-manifesto-col co-reveal">
+                                <span class="co-manifesto-num">{col.num}</span>
+                                <h3>{col.title}</h3>
+                                <p>{col.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    )}
 
     <!-- 06. TIMELINE -->
-    <section class="co-timeline section-padding">
-        <div class="container">
-            <div class="co-timeline-header">
-                <span class="co-section-num co-reveal">(04)</span>
-                <h2 class="co-timeline-title co-reveal">History</h2>
-            </div>
-            <div class="co-tl-list">
-                {history.map((entry) => (
-                    <div class="co-tl-entry co-reveal">
-                        <div class="co-tl-year-big">{entry.year}</div>
-                        <div class="co-tl-sep"></div>
-                        <div class="co-tl-body">
-                            <h3>{entry.title}</h3>
-                            <p>{entry.text}</p>
+    {history.length > 0 && (
+        <section class="co-timeline section-padding">
+            <div class="container">
+                <div class="co-timeline-header">
+                    <span class="co-section-num co-reveal">(04)</span>
+                    <h2 class="co-timeline-title co-reveal">{historySectionTitle}</h2>
+                </div>
+                <div class="co-tl-list">
+                    {history.map((entry) => (
+                        <div class="co-tl-entry co-reveal">
+                            <div class="co-tl-year-big">{entry.year}</div>
+                            <div class="co-tl-sep"></div>
+                            <div class="co-tl-body">
+                                <h3>{entry.title}</h3>
+                                <p>{entry.text}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    )}
 
-    <!-- 06. CLIENTS -->
-    <section class="co-clients section-padding">
-        <div class="container">
-            <div class="co-clients-header">
-                <span class="co-section-num co-reveal">(05)</span>
-                <h2 class="co-clients-title co-reveal">Clients</h2>
+    <!-- 07. CLIENTS -->
+    {clients.length > 0 && (
+        <section class="co-clients section-padding">
+            <div class="container">
+                <div class="co-clients-header">
+                    <span class="co-section-num co-reveal">(05)</span>
+                    <h2 class="co-clients-title co-reveal">{clientsSectionTitle}</h2>
+                </div>
+                <div class="co-clients-grid">
+                    {clients.map((client) => (
+                        <div class="co-client-item co-reveal">
+                            <span class="co-client-name">{client.name}</span>
+                            <span class="co-client-type">{client.type}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div class="co-clients-grid">
-                {clients.map((client) => (
-                    <div class="co-client-item co-reveal">
-                        <span class="co-client-name">{client.name}</span>
-                        <span class="co-client-type">{client.type}</span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
+        </section>
+    )}
 
-    <!-- 07. MAP / LOCATION -->
+    <!-- 08. MAP / LOCATION -->
     <section class="co-location section-padding">
         <div class="container">
             <div class="co-location-header">
-                <span class="co-section-num co-reveal">{statement.number === '(01)' ? '(05)' : '(06)'}</span>
+                <span class="co-section-num co-reveal">(06)</span>
                 <h2 class="co-location-title co-reveal">{access.title}</h2>
             </div>
             <div class="co-location-content co-reveal">
                 <div class="co-map-wrap">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.5!2d139.7075!3d35.6815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQwJzUzLjQiTiAxMznCsDQyJzI3LjAiRQ!5e0!3m2!1sja!2sjp!4v1700000000000"
+                        src={mapsUrl}
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="co-location-details">
-                    {access.details.map((detail) => (
+                    {access.details?.map((detail) => (
                         <div class="co-loc-item">
                             <span class="co-loc-label">{detail.label}</span>
                             <p>{detail.text}</p>
@@ -226,13 +220,13 @@ const access = companyData?.access || {
 
     <section class="contact-portal" id="contact-portal">
         <div class="portal-container">
-            <a href="/contact/" class="portal-link">
+            <a href={contactPortal.link || '/contact/'} class="portal-link">
                 <div class="portal-content">
-                    <span class="portal-tag">GET IN TOUCH</span>
-                    <h2 class="portal-title" set:html="Start your<br>project"></h2>
+                    <span class="portal-tag">{contactPortal.tag}</span>
+                    <h2 class="portal-title" set:html={contactPortal.title}></h2>
                     <div class="portal-magnetic-btn">
                         <span class="btn-circle"></span>
-                        <span class="btn-text">CONTACT US</span>
+                        <span class="btn-text">{contactPortal.btnText}</span>
                     </div>
                 </div>
             </a>

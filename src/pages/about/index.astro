@@ -1,42 +1,38 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getAboutPage, urlFor } from '../../lib/sanity';
+import { getAboutPage, getSiteSettings, urlFor } from '../../lib/sanity';
 
 const aboutData = await getAboutPage();
+const settings = await getSiteSettings();
+
+// SEO
+const metaTitle = aboutData?.metaTitle || 'About | aspectmobili by HITOBA DESIGN';
+const metaDescription = aboutData?.metaDescription || settings?.description || '';
 
 // Fallbacks
 const hero = aboutData?.hero || {
   title: 'About',
   subtitle: 'ASPECTMOBILI',
-  description: 'aspectmobili — это проект в сфере пространственного дизайна от HITOBA DESIGN, нацеленный на обогащение людей и пространств вместе с нашими клиентами.'
+  description: ''
 };
 
-const sections = aboutData?.sections || [
-  {
-    number: '(01)',
-    title: 'Concept',
-    leadText: 'We create spaces that are not just offices, but fragments of architectural intelligence.',
-    bodyText: 'The world of work is evolving. At aspectmobili, we believe the physical environment is a catalyst for culture. Our approach merges minimal aesthetics with structural precision, resulting in spaces that breathe and inspire.',
-    caption: 'FRAGMENT 205 — TOKYO'
-  }
-];
-
-const spreadImages = aboutData?.spreadImages || [
-  '/about_arch.png', '/about_arch_2.png', '/work1.png', '/work2.png', '/work3.png', '/contact_portal.png'
-];
+const sections = aboutData?.sections || [];
+const spreadImages = aboutData?.spreadImages || [];
 
 const style = aboutData?.style || {
   title: 'Style',
-  items: [
-    {
-      title: '(Spatial Intelligence)',
-      text: 'We believe that great office design starts with understanding the people who use it. Through deep analysis of workflows, culture, and business goals, we uncover the essence of what a space truly needs to become.'
-    }
-  ]
+  items: []
+};
+
+const contactPortal = settings?.contactPortal || {
+  tag: 'GET IN TOUCH',
+  title: 'Start your<br>project',
+  btnText: 'CONTACT US',
+  link: '/contact/'
 };
 ---
 
-<Layout title="About | aspectmobili by HITOBA DESIGN" bodyClass="about-page">
+<Layout title={metaTitle} description={metaDescription} bodyClass="about-page">
     <section class="about-hero" id="about-hero">
         <div class="about-hero-top-left">
             <h1 class="about-page-title reveal-hero">{hero.title}</h1>
@@ -86,53 +82,57 @@ const style = aboutData?.style || {
     ))}
 
     <!-- Image Spread Section (Horizontal Slider) -->
-    <section class="about-spread">
-        <div class="about-spread-container">
-            <div class="about-spread-track">
-                {spreadImages.map((img: any) => (
-                    <div class="spread-item">
-                        <img src={img.asset ? urlFor(img).width(1200).url() : img} alt="Office Archive">
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-
-    <!-- Style Section (Split Title) -->
-    <section class="about-style section-padding">
-        <div class="style-wrapper">
-            <div class="style-sticky-left">
-                <h2 class="style-section-title">{style.title}</h2>
-                <div class="style-counter">
-                    <div class="style-counter-track">
-                        {style.items?.map((_, i) => (
-                            <span>{String(i + 1).padStart(2, '0')}</span>
-                        ))}
-                    </div>
+    {spreadImages.length > 0 && (
+        <section class="about-spread">
+            <div class="about-spread-container">
+                <div class="about-spread-track">
+                    {spreadImages.map((img: any) => (
+                        <div class="spread-item">
+                            <img src={img.asset ? urlFor(img).width(1200).url() : img} alt="Office Archive">
+                        </div>
+                    ))}
                 </div>
             </div>
+        </section>
+    )}
 
-            <ol class="style-items">
-                {style.items?.map((item: any, index: number) => (
-                    <li class="style-item" data-index={index}>
-                        <span class="style-label">{item.label || ''}</span>
-                        <h3 class="style-heading">{item.title}</h3>
-                        <p class="style-body">{item.text}</p>
-                    </li>
-                ))}
-            </ol>
-        </div>
-    </section>
+    <!-- Style Section (Split Title) -->
+    {style.items && style.items.length > 0 && (
+        <section class="about-style section-padding">
+            <div class="style-wrapper">
+                <div class="style-sticky-left">
+                    <h2 class="style-section-title">{style.title}</h2>
+                    <div class="style-counter">
+                        <div class="style-counter-track">
+                            {style.items?.map((_: any, i: number) => (
+                                <span>{String(i + 1).padStart(2, '0')}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <ol class="style-items">
+                    {style.items?.map((item: any, index: number) => (
+                        <li class="style-item" data-index={index}>
+                            <span class="style-label">{item.label || ''}</span>
+                            <h3 class="style-heading">{item.title}</h3>
+                            <p class="style-body">{item.text}</p>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        </section>
+    )}
 
     <section class="contact-portal" id="contact-portal">
         <div class="portal-container">
-            <a href="/contact/" class="portal-link">
+            <a href={contactPortal.link || '/contact/'} class="portal-link">
                 <div class="portal-content">
-                    <span class="portal-tag">GET IN TOUCH</span>
-                    <h2 class="portal-title">Start your<br>project</h2>
+                    <span class="portal-tag">{contactPortal.tag}</span>
+                    <h2 class="portal-title" set:html={contactPortal.title}></h2>
                     <div class="portal-magnetic-btn">
                         <span class="btn-circle"></span>
-                        <span class="btn-text">CONTACT US</span>
+                        <span class="btn-text">{contactPortal.btnText}</span>
                     </div>
                 </div>
             </a>
