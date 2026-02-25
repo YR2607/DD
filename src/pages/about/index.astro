@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
 import { getAboutPage, getSiteSettings, urlFor } from '../../lib/sanity';
 
 const aboutData = await getAboutPage();
@@ -45,9 +46,9 @@ const contactPortal = settings?.contactPortal || {
         </div>
 
         <div class="about-hero-bottom-right">
-            <div class="hero-description reveal-hero">
-                <p set:html={hero.description}></p>
-            </div>
+                <div class="hero-description reveal-hero">
+                    <PortableText value={hero.description} />
+                </div>
         </div>
 
         <div class="scroll-hint reveal-hero">
@@ -65,8 +66,8 @@ const contactPortal = settings?.contactPortal || {
                         <span class={index % 2 !== 0 ? 'about-number' : 'section-number'}>{section.number}</span>
                         <h2 class={index % 2 !== 0 ? 'about-title' : 'section-title'}>{section.title}</h2>
                         <div class={index % 2 !== 0 ? 'about-text-content' : ''}>
-                            <p class={index % 2 !== 0 ? 'lead' : 'lead-text'}>{section.leadText}</p>
-                            <p>{section.bodyText}</p>
+                            <div class={index % 2 !== 0 ? 'lead' : 'lead-text'}><PortableText value={section.leadText} /></div>
+                            <PortableText value={section.bodyText} />
                         </div>
                     </div>
                     {section.caption && (

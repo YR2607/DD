@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
 import { getCompanyPage, getSiteSettings } from '../../lib/sanity';
 
 const companyData = await getCompanyPage();
@@ -83,7 +84,7 @@ const mapsUrl = access.googleMapsUrl || settings?.googleMapsUrl || 'https://www.
             <div class="container">
                 <div class="co-statement-inner">
                     <span class="co-section-num co-reveal">{statement.number}</span>
-                    <h2 class="co-statement-text co-reveal" set:html={statement.text}></h2>
+                    <div class="co-statement-text co-reveal"><PortableText value={statement.text} /></div>
                 </div>
             </div>
         </section>
@@ -139,7 +140,7 @@ const mapsUrl = access.googleMapsUrl || settings?.googleMapsUrl || 'https://www.
                             <div class="co-manifesto-col co-reveal">
                                 <span class="co-manifesto-num">{col.num}</span>
                                 <h3>{col.title}</h3>
-                                <p>{col.text}</p>
+                                <PortableText value={col.text} />
                             </div>
                         ))}
                     </div>
@@ -163,7 +164,7 @@ const mapsUrl = access.googleMapsUrl || settings?.googleMapsUrl || 'https://www.
                             <div class="co-tl-sep"></div>
                             <div class="co-tl-body">
                                 <h3>{entry.title}</h3>
-                                <p>{entry.text}</p>
+                                <PortableText value={entry.text} />
                             </div>
                         </div>
                     ))}

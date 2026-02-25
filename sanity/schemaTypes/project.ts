@@ -46,8 +46,8 @@ export const projectType = defineType({
         defineField({
             name: 'description',
             title: 'Описание проекта (Concept)',
-            description: 'Основной текстовый блок на детальной странице проекта',
-            type: 'text',
+            description: 'Основной текстовый блок на детальной странице проекта. Поддерживает форматирование (жирный, курсив, ссылки).',
+            type: 'blockContent',
             group: 'main',
         }),
         defineField({

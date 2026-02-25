@@ -63,7 +63,7 @@ export const pageCompanyType = defineType({
             group: 'statement',
             fields: [
                 { name: 'number', type: 'string', title: 'Порядковый номер (Например: (01))' },
-                { name: 'text', type: 'text', title: 'Текст философии' },
+                { name: 'text', type: 'blockContent', title: 'Текст философии' },
             ],
         }),
 
@@ -142,7 +142,7 @@ export const pageCompanyType = defineType({
                             fields: [
                                 { name: 'num', type: 'string', title: 'Номер (01)' },
                                 { name: 'title', type: 'string', title: 'Заголовок колонки' },
-                                { name: 'text', type: 'text', title: 'Текст' },
+                                { name: 'text', type: 'blockContent', title: 'Текст' },
                             ],
                             preview: {
                                 select: { title: 'title', subtitle: 'num' },
@@ -173,7 +173,7 @@ export const pageCompanyType = defineType({
                     fields: [
                         { name: 'year', type: 'string', title: 'Год (Например: 2024)' },
                         { name: 'title', type: 'string', title: 'Главное событие' },
-                        { name: 'text', type: 'text', title: 'Описание события' },
+                        { name: 'text', type: 'blockContent', title: 'Описание события' },
                     ],
                     preview: {
                         select: { title: 'title', subtitle: 'year' },

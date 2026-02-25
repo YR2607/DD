@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
 import { getProject, getProjects, getSiteSettings, urlFor } from '../../lib/sanity';
 
 export async function getStaticPaths() {
@@ -92,7 +93,7 @@ const gallery = project.gallery || [];
              <h2 class="section-title">Concept</h2>
         </div>
         <div class="desc-right reveal">
-            <p class="lead" set:html={project.description?.replace(/\n/g, '<br>')}></p>
+            <div class="lead"><PortableText value={project.description} /></div>
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
+import { presentationTool } from '@sanity/presentation'
 import { schemaTypes } from './schemaTypes'
 
 const deskStructure = (S: any) =>
     S.list()
         .title('Menu')
         .items([
-            // 1. Home
             S.listItem()
                 .title('Home')
                 .child(
@@ -16,7 +16,6 @@ const deskStructure = (S: any) =>
                         .documentId('pageHome')
                 ),
 
-            // 2. Works (Projects)
             S.listItem()
                 .title('Works')
                 .child(
@@ -37,7 +36,6 @@ const deskStructure = (S: any) =>
                         ])
                 ),
 
-            // 3. About
             S.listItem()
                 .title('About')
                 .child(
@@ -46,7 +44,6 @@ const deskStructure = (S: any) =>
                         .documentId('pageAbout')
                 ),
 
-            // 4. Company
             S.listItem()
                 .title('Company')
                 .child(
@@ -55,7 +52,6 @@ const deskStructure = (S: any) =>
                         .documentId('pageCompany')
                 ),
 
-            // 5. Site Settings
             S.listItem()
                 .title('Site Settings')
                 .child(
@@ -76,7 +72,14 @@ export default defineConfig({
         deskTool({
             structure: deskStructure,
         }),
-        visionTool()
+        presentationTool({
+            previewUrl: {
+                draftMode: {
+                    enable: '/api/draft-mode/enable',
+                },
+            },
+        }),
+        visionTool(),
     ],
 
     schema: {

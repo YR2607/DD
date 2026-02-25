@@ -78,8 +78,8 @@ export const pageHomeType = defineType({
                     fields: [
                         { name: 'number', type: 'string', title: 'Порядковый номер (например: (01))' },
                         { name: 'title', type: 'string', title: 'Заголовок блока' },
-                        { name: 'leadText', type: 'text', title: 'Крупный вводный текст' },
-                        { name: 'bodyText', type: 'text', title: 'Основной текст параграфа' },
+                        { name: 'leadText', type: 'blockContent', title: 'Крупный вводный текст' },
+                        { name: 'bodyText', type: 'blockContent', title: 'Основной текст параграфа' },
                         { name: 'image', type: 'image', title: 'Фотография блока', options: { hotspot: true } },
                         { name: 'caption', type: 'string', title: 'Подпись под фото (Например: FRAGMENT 205)' },
                         { name: 'inverted', type: 'boolean', title: 'Инвертировать расположение? (Фото слева, текст справа)' },

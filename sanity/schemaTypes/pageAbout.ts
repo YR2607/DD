@@ -46,7 +46,7 @@ export const pageAboutType = defineType({
             fields: [
                 { name: 'title', type: 'string', title: 'Главный огромный заголовок (About)' },
                 { name: 'subtitle', type: 'string', title: 'Подзаголовок рядом (ASPECTMOBILI)' },
-                { name: 'description', type: 'text', title: 'Описание внизу hero-секции' },
+                { name: 'description', type: 'blockContent', title: 'Описание внизу hero-секции' },
             ],
         }),
 
@@ -63,8 +63,8 @@ export const pageAboutType = defineType({
                     fields: [
                         { name: 'number', type: 'string', title: 'Порядковый номер (Например: (01))' },
                         { name: 'title', type: 'string', title: 'Заголовок блока' },
-                        { name: 'leadText', type: 'text', title: 'Вводный крупный текст' },
-                        { name: 'bodyText', type: 'text', title: 'Основной мелкий текст' },
+                        { name: 'leadText', type: 'blockContent', title: 'Вводный крупный текст' },
+                        { name: 'bodyText', type: 'blockContent', title: 'Основной мелкий текст' },
                         { name: 'caption', type: 'string', title: 'Подпись к изображению (если блок четный)' },
                     ],
                     preview: {

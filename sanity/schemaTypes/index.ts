@@ -4,5 +4,14 @@ import { pageHomeType } from './pageHome'
 import { pageAboutType } from './pageAbout'
 import { pageCompanyType } from './pageCompany'
 import { pageWorksType } from './pageWorks'
+import { blockContentType } from './blockContent'
 
-export const schemaTypes = [projectType, siteSettingsType, pageHomeType, pageAboutType, pageCompanyType, pageWorksType]
+export const schemaTypes = [
+    blockContentType,
+    projectType,
+    siteSettingsType,
+    pageHomeType,
+    pageAboutType,
+    pageCompanyType,
+    pageWorksType,
+]

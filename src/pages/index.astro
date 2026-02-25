@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
 import { getHomePage, getProjects, getSiteSettings, urlFor } from '../lib/sanity';
 
 const homeData = await getHomePage();
@@ -198,8 +199,8 @@ const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
                     <span class="about-number">{section.number}</span>
                     <h2 class="about-title">{section.title}</h2>
                     <div class="about-text-content">
-                      <p class="lead">{section.leadText}</p>
-                      <p>{section.bodyText}</p>
+                      <div class="lead"><PortableText value={section.leadText} /></div>
+                      <PortableText value={section.bodyText} />
                     </div>
                   </div>
                 </>
