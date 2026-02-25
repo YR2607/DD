@@ -70,7 +70,7 @@ export default defineConfig({
             structure: deskStructure,
         }),
         presentationTool({
-            previewUrl: 'http://localhost:4321',
+            previewUrl: '/',
         }),
     ],
 
