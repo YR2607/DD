@@ -2,6 +2,12 @@
 .astro/
 dist/
 
+# Vercel
+.vercel/
+
+# Sanity
+sanity/.sanity/
+
 # Environment
 .env
 .env.production
