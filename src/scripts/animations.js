@@ -70,10 +70,10 @@ export function initScrollAnimations(slider) {
                 duration: 1
             }, 0)
 
-            // Animate hero section height on mobile (from 100vh to 60vh)
+            // Animate hero section height on mobile (from 110vh to 65vh)
             if (isMobile) {
                 mainTl.to(heroSection, {
-                    height: '60vh',
+                    height: '65vh',
                     duration: 1,
                     ease: 'none'
                 }, 0)
@@ -83,7 +83,7 @@ export function initScrollAnimations(slider) {
                 mainTl.to(heroSlider, {
                     width: isMobile ? '100.2%' : '86%',
                     left: isMobile ? '0%' : '7%',
-                    height: isMobile ? '50vh' : '70vh',
+                    height: isMobile ? '55vh' : '70vh',
                     y: isMobile ? '0vh' : '8vh',
                     borderRadius: isMobile ? '0px' : '2px',
                     duration: 1
