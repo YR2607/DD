@@ -39,9 +39,9 @@ export function initScrollAnimations(slider) {
                 scrollTrigger: {
                     trigger: heroSection,
                     start: 'top top',
-                    end: isMobile ? 'bottom+=500 bottom' : 'bottom bottom', // Fixed offset on mobile to avoid jitter during height animation
-                    scrub: isMobile ? true : 0.6, // 'true' is more instant than a numeric delay on mobile
-                    fastScrollEnd: true,        // Prevents completion lag on fast scrolls
+                    end: 'bottom bottom', // Removed the +500 offset to fix the "sticking" issue
+                    scrub: isMobile ? 0.8 : 0.6, // Softened scrub on mobile (0.8 instead of true) to prevent jumps
+                    anticipatePin: 1,           // Helps smooth out the entry into the pinned state
                     onEnter: () => {
                         const activeSlide = document.querySelector('.hero-slide.active');
                         if (activeSlide && activeSlide.dataset.id) {
