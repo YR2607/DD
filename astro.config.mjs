@@ -4,15 +4,15 @@ import sanity from '@sanity/astro';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+    output: 'server',
     outDir: './dist',
     publicDir: './public',
-    output: 'static',
 
     integrations: [
         sanity({
             projectId: 'nw2y6nmp',
             dataset: 'production',
-            useCdn: true,
+            useCdn: false,
             apiVersion: '2023-05-03',
             studioBasePath: '/admin',
             stega: {
