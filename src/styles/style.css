@@ -1596,6 +1596,15 @@ body.menu-open .main-header {
     margin-bottom: 100px;
   }
 
+  .about-image-mask {
+    clip-path: none !important;
+    height: 45vh;
+  }
+
+  .about-img {
+    transform: none !important;
+  }
+
   .about-title {
     font-size: 3rem;
   }
@@ -1734,25 +1743,80 @@ body.menu-open .main-header {
 
   /* Hero Section Mobile */
   .hero-section {
-    height: 120vh;
+    height: 100vh;
   }
 
   .hero-logo-text {
-    bottom: 20px;
-    left: 20px;
-  }
-
-  .hero-logo-text span {
-    font-size: clamp(2rem, 10vw, 5rem);
+    display: none !important;
   }
 
   .hero-info-bar {
-    display: none;
-    /* Hide complex info bar on mobile */
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 20px 20px;
+    z-index: 50;
   }
 
   .info-container {
-    padding: 0 20px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .info-line-wrapper {
+    position: absolute;
+    right: 20px;
+    top: -55vh;
+    height: 50vh;
+    width: 2px;
+  }
+
+  .info-horizontal-line {
+    display: block !important;
+    width: 2px !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+  }
+
+  .info-progress-bar {
+    width: 100% !important;
+    height: 0% !important;
+    background: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: height 0.6s ease;
+  }
+
+  .info-content-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .hero-info-bar .info-left {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .slide-counter {
+    font-size: 0.65rem;
+    opacity: 0.5;
+  }
+
+  .project-name {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  .see-detail-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    padding-bottom: 2px;
   }
 
   .slide-overlay-text {
@@ -1761,8 +1825,7 @@ body.menu-open .main-header {
   }
 
   .scroll-arrow {
-    bottom: 60px;
-    right: 20px;
+    display: none;
   }
 
   /* Navigation Overlay Mobile */

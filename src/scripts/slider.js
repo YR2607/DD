@@ -94,15 +94,28 @@ export function initHeroSlider(lenis) {
                 const progressBar = document.getElementById('info-progress-bar')
                 if (progressBar) {
                     if (progressTween) progressTween.kill()
-                    progressTween = gsap.fromTo(progressBar,
-                        { width: '0%' },
-                        {
-                            width: '100%',
-                            duration: slideDuration / 1000,
-                            ease: 'none',
-                            onComplete: nextSlide
-                        }
-                    )
+                    const isMobile = window.innerWidth <= 768
+                    if (isMobile) {
+                        progressTween = gsap.fromTo(progressBar,
+                            { height: '0%' },
+                            {
+                                height: '100%',
+                                duration: slideDuration / 1000,
+                                ease: 'none',
+                                onComplete: nextSlide
+                            }
+                        )
+                    } else {
+                        progressTween = gsap.fromTo(progressBar,
+                            { width: '0%' },
+                            {
+                                width: '100%',
+                                duration: slideDuration / 1000,
+                                ease: 'none',
+                                onComplete: nextSlide
+                            }
+                        )
+                    }
                 }
             } else {
                 if (slide.classList.contains('active')) {
