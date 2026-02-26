@@ -3,6 +3,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Prevent ScrollTrigger from refreshing on every mobile resize (like URL bar hiding/showing)
+// This is the main fix for "jittery" or "jumping" scroll transitions on iOS
+ScrollTrigger.config({
+    ignoreMobileResize: true,
+    autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
+})
+
 /**
  * Инициализация анимаций ScrollTrigger
  * @param {Object} slider - Управление слайдером (pause/resume)
@@ -33,7 +40,8 @@ export function initScrollAnimations(slider) {
                     trigger: heroSection,
                     start: 'top top',
                     end: 'bottom bottom',
-                    scrub: 0.6,
+                    scrub: isMobile ? 0.3 : 0.6, // More responsive scrub on mobile
+                    fastScrollEnd: true,        // Prevents completion lag on fast scrolls
                     onEnter: () => {
                         const activeSlide = document.querySelector('.hero-slide.active');
                         if (activeSlide && activeSlide.dataset.id) {
@@ -70,10 +78,10 @@ export function initScrollAnimations(slider) {
                 duration: 1
             }, 0)
 
-            // Animate hero section height on mobile (from 110vh to 65vh)
+            // Animate hero section height on mobile (from 110svh to 65svh)
             if (isMobile) {
                 mainTl.to(heroSection, {
-                    height: '65vh',
+                    height: '65svh',
                     duration: 1,
                     ease: 'none'
                 }, 0)
@@ -83,7 +91,7 @@ export function initScrollAnimations(slider) {
                 mainTl.to(heroSlider, {
                     width: isMobile ? '100.2%' : '86%',
                     left: isMobile ? '0%' : '7%',
-                    height: isMobile ? '55vh' : '70vh',
+                    height: isMobile ? '55svh' : '70vh',
                     y: isMobile ? '0vh' : '8vh',
                     borderRadius: isMobile ? '0px' : '2px',
                     duration: 1

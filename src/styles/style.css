@@ -1744,10 +1744,11 @@ body.menu-open .main-header {
   /* Hero Section Mobile */
   .hero-section {
     height: 110vh;
+    height: 110svh;
   }
 
   .hero-logo-text {
-    bottom: 25px;
+    bottom: calc(25px + env(safe-area-inset-bottom, 0px));
     left: 20px;
     z-index: 60;
   }
@@ -1762,6 +1763,7 @@ body.menu-open .main-header {
     left: 0;
     width: 100%;
     height: 100%;
+    height: 100svh;
     padding: 0;
     z-index: 50;
     pointer-events: none;
@@ -1808,7 +1810,7 @@ body.menu-open .main-header {
   /* Info texts - bottom right, nicely spaced */
   .info-content-container {
     position: absolute;
-    bottom: 80px;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     right: 25px;
     display: flex;
     flex-direction: column;
