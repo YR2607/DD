@@ -4,6 +4,7 @@ import { pageHomeType } from './pageHome'
 import { pageAboutType } from './pageAbout'
 import { pageCompanyType } from './pageCompany'
 import { pageWorksType } from './pageWorks'
+import { pageContactType } from './pageContact'
 import { blockContentType } from './blockContent'
 
 export const schemaTypes = [
@@ -14,4 +15,5 @@ export const schemaTypes = [
     pageAboutType,
     pageCompanyType,
     pageWorksType,
+    pageContactType,
 ]

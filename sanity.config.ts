@@ -50,6 +50,13 @@ const deskStructure = (S) =>
                         .documentId('pageCompany')
                 ),
             S.listItem()
+                .title('Contact')
+                .child(
+                    S.document()
+                        .schemaType('pageContact')
+                        .documentId('pageContact')
+                ),
+            S.listItem()
                 .title('Site Settings')
                 .child(
                     S.document()

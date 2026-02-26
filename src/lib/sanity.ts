@@ -45,6 +45,10 @@ export async function getCompanyPage() {
     return await client.fetch(`*[_type == "pageCompany"][0]`)
 }
 
+export async function getContactPage() {
+    return await client.fetch(`*[_type == "pageContact"][0]`)
+}
+
 export async function getWorksPage() {
     return await client.fetch(`*[_type == "pageWorks"][0]`)
 }
