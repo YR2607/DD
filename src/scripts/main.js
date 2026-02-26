@@ -8,8 +8,6 @@ import { initHeroSlider } from './slider.js'
 import { initNavigation } from './navigation.js'
 import { initScrollAnimations, initPortalAnimations } from './animations.js'
 
-gsap.registerPlugin(ScrollTrigger)
-
 function initWorksPage() {
   // Filter toggle
   const filterBtn = document.getElementById('works-filter-btn')
@@ -218,6 +216,18 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (isCompanyPage) {
         initCompanyPage()
       }
+
+      // Generic reveal animations for pages that use .reveal class (Contact, etc.)
+      const reveals = document.querySelectorAll('.reveal')
+      reveals.forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+          }
+        )
+      })
 
       // Always init scroll animations for global header behavior
       initScrollAnimations(slider)

@@ -34,6 +34,11 @@ const contactPortal = settings?.contactPortal || {
 };
 const email = settings?.email || '';
 const phone = settings?.phone || '';
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://dd-git-main-rackovchens-projects.vercel.app');
+
+// SSR Cache: 60s CDN cache, serve stale while revalidating for 24h
+Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=86400');
 ---
 
 <!DOCTYPE html>
@@ -43,6 +48,12 @@ const phone = settings?.phone || '';
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
 		<title>{title}</title>
+		<link rel="canonical" href={canonicalURL.href} />
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL.href} />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
