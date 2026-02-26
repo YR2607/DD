@@ -83,7 +83,7 @@ export function initScrollAnimations(slider) {
                 mainTl.to(heroSlider, {
                     width: isMobile ? '100.2%' : '86%',
                     left: isMobile ? '0%' : '7%',
-                    height: isMobile ? '55vh' : '70vh',
+                    height: isMobile ? '50vh' : '70vh',
                     y: isMobile ? '0vh' : '8vh',
                     borderRadius: isMobile ? '0px' : '2px',
                     duration: 1
@@ -109,8 +109,8 @@ export function initScrollAnimations(slider) {
                 }
             }
 
-            if (heroInfoBar) mainTl.to(heroInfoBar, { opacity: 0, duration: 0.3 }, 0.2)
-            if (projectDetails) mainTl.to(projectDetails, { opacity: 1, y: 0, duration: 0.8 }, 0.4)
+            if (heroInfoBar) mainTl.to(heroInfoBar, { opacity: 0, duration: 0.3 }, isMobile ? 0.1 : 0.2)
+            if (projectDetails) mainTl.to(projectDetails, { opacity: 1, y: 0, duration: 0.8 }, isMobile ? 0.1 : 0.4)
 
             const overlayTexts = document.querySelectorAll('.slide-overlay-text')
             if (overlayTexts.length > 0) mainTl.to(overlayTexts, { opacity: 1, duration: 0.5 }, 0.3)
