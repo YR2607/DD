@@ -1,18 +1,15 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
-const isDev = typeof import.meta !== 'undefined' && import.meta.env?.DEV
-
 export const client = createClient({
     projectId: 'nw2y6nmp',
     dataset: 'production',
-    useCdn: !isDev,
+    useCdn: false,
     apiVersion: '2023-05-03',
-    perspective: isDev ? 'previewDrafts' : 'published',
-    stega: isDev ? {
+    stega: {
         enabled: true,
         studioUrl: '/admin',
-    } : { enabled: false },
+    },
 })
 
 const builder = imageUrlBuilder(client)
