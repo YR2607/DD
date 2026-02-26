@@ -1,6 +1,5 @@
 ---
 import { getSiteSettings } from '../lib/sanity';
-import { VisualEditing } from '@sanity/astro/visual-editing';
 import "../styles/style.css";
 
 interface Props {
@@ -174,7 +173,6 @@ const phone = settings?.phone || '';
 		</footer>
 
 		<script src="../scripts/main.js"></script>
-		<VisualEditing client:only="react" />
 	</body>
 </html>
 
