@@ -206,8 +206,11 @@ export function initScrollAnimations(slider) {
         }
     })
 
-    // HELPER: Improved Split Text function (handles <br>)
+    const isMobileDevice = window.innerWidth <= 768
+
+    // HELPER: Improved Split Text function (handles <br>) - DESKTOP ONLY
     const splitText = (selector) => {
+        if (isMobileDevice) return; // Skip on mobile for performance
         const elements = document.querySelectorAll(selector);
         elements.forEach(el => {
             const html = el.innerHTML;
@@ -222,7 +225,7 @@ export function initScrollAnimations(slider) {
         });
     }
 
-    // Prepare titles for split animation
+    // Prepare titles for split animation (desktop only)
     splitText('.about-title, .portal-title');
 
     // 1. HEADER ANIMATIONS
@@ -234,61 +237,78 @@ export function initScrollAnimations(slider) {
         const aboutText = row.querySelector('.about-text-content')
         const aboutNumber = row.querySelector('.about-number')
 
-        // Cinematic Image Reveal
-        gsap.to(imageMask, {
-            clipPath: 'inset(0 0% 0 0)',
-            duration: 1.8,
-            ease: 'power3.inOut',
-            scrollTrigger: {
-                trigger: row,
-                start: 'top 90%',
-                end: 'top 40%',
-                scrub: 0.4
-            }
-        })
-
-        // Image Parallax Zoom
-        gsap.to(aboutImg, {
-            scale: 1,
-            scrollTrigger: {
-                trigger: row,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.5
-            }
-        })
-
-        // Content Stagger Reveal
-        gsap.from([aboutNumber, aboutText], {
-            y: 25,
-            opacity: 0,
-            filter: 'blur(6px)',
-            duration: 1.0,
-            stagger: 0.08,
-            ease: 'expo.out',
-            scrollTrigger: {
-                trigger: row,
-                start: 'top 95%',
-                toggleActions: 'play none none none'
-            }
-        })
-
-        // Split Text Animation for About Title
-        const titleChars = aboutTitle.querySelectorAll('.char')
-        if (titleChars.length) {
-            gsap.from(titleChars, {
+        if (isMobileDevice) {
+            // MOBILE: Simple fade-in without heavy scrub/blur/splitText
+            gsap.from([imageMask, aboutImg, aboutNumber, aboutTitle, aboutText].filter(Boolean), {
+                y: 30,
                 opacity: 0,
-                y: 15,
-                filter: 'blur(4px)',
-                stagger: 0.012,
                 duration: 0.8,
-                ease: 'expo.out',
+                stagger: 0.1,
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: row,
-                    start: 'top 92%',
+                    start: 'top 90%',
                     toggleActions: 'play none none none'
                 }
             })
+        } else {
+            // DESKTOP: Full cinematic animations
+            // Cinematic Image Reveal
+            gsap.to(imageMask, {
+                clipPath: 'inset(0 0% 0 0)',
+                duration: 1.8,
+                ease: 'power3.inOut',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 90%',
+                    end: 'top 40%',
+                    scrub: 0.4
+                }
+            })
+
+            // Image Parallax Zoom
+            gsap.to(aboutImg, {
+                scale: 1,
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.5
+                }
+            })
+
+            // Content Stagger Reveal
+            gsap.from([aboutNumber, aboutText], {
+                y: 25,
+                opacity: 0,
+                filter: 'blur(6px)',
+                duration: 1.0,
+                stagger: 0.08,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 95%',
+                    toggleActions: 'play none none none'
+                }
+            })
+
+            // Split Text Animation for About Title
+            const titleChars = aboutTitle.querySelectorAll('.char')
+            if (titleChars.length) {
+                gsap.from(titleChars, {
+                    opacity: 0,
+                    y: 15,
+                    filter: 'blur(4px)',
+                    stagger: 0.012,
+                    duration: 0.8,
+                    ease: 'expo.out',
+                    scrollTrigger: {
+                        trigger: row,
+                        start: 'top 92%',
+                        toggleActions: 'play none none none'
+                    }
+                })
+            }
         }
     })
 
@@ -517,5 +537,9 @@ export function initPortalAnimations() {
     mm.add("(max-width: 768px)", () => {
         magneticBtn.removeEventListener('mousemove', moveBtn)
         magneticBtn.removeEventListener('mouseleave', resetBtn)
+        if (portalTitle) {
+            portal.removeEventListener('mousemove', portal._moveTitle)
+            portal.removeEventListener('mouseleave', portal._resetTitle)
+        }
     })
 }

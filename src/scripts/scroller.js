@@ -7,12 +7,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
  * @returns {Lenis}
  */
 export function initScroller() {
+    const isMobile = window.innerWidth <= 768
+
     const lenis = new Lenis({
-        duration: 1.0,
+        duration: isMobile ? 0.8 : 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        lerp: 0.1,
-        touchMultiplier: 1.5,
+        smoothTouch: false,
+        lerp: isMobile ? 0.15 : 0.1,
+        touchMultiplier: isMobile ? 2 : 1.5,
     })
 
     lenis.on('scroll', ScrollTrigger.update)

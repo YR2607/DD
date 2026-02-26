@@ -236,8 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, isSimplePage ? 50 : 200)
   }
 
-  // Fallback to hide preloader if load event takes too long
-  const fallbackTimeout = setTimeout(hidePreloader, 3000)
+  // Fallback to hide preloader if load event takes too long (faster on mobile)
+  const isMobilePreloader = window.innerWidth <= 768
+  const fallbackTimeout = setTimeout(hidePreloader, isMobilePreloader ? 1500 : 3000)
 
   window.addEventListener('load', () => {
     clearTimeout(fallbackTimeout)

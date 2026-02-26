@@ -1405,7 +1405,7 @@ body.menu-open .main-header {
 
   /* New Footer Mobile Fixes */
   .footer {
-    padding: 60px 0 40px;
+    padding: 60px 0 50px;
   }
 
   .footer-nav-row {
@@ -1417,7 +1417,7 @@ body.menu-open .main-header {
 
   .footer-links {
     flex-wrap: wrap;
-    gap: 15px 20px;
+    gap: 12px 24px;
   }
 
   .footer-middle-row {
