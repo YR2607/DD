@@ -1747,7 +1747,12 @@ body.menu-open .main-header {
   }
 
   .hero-logo-text {
-    display: none !important;
+    bottom: 80px;
+    left: 20px;
+  }
+
+  .hero-logo-text span {
+    font-size: clamp(1.8rem, 9vw, 3.5rem);
   }
 
   .hero-info-bar {
