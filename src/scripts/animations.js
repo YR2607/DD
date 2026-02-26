@@ -39,8 +39,8 @@ export function initScrollAnimations(slider) {
                 scrollTrigger: {
                     trigger: heroSection,
                     start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: isMobile ? 0.3 : 0.6, // More responsive scrub on mobile
+                    end: isMobile ? 'bottom+=500 bottom' : 'bottom bottom', // Fixed offset on mobile to avoid jitter during height animation
+                    scrub: isMobile ? true : 0.6, // 'true' is more instant than a numeric delay on mobile
                     fastScrollEnd: true,        // Prevents completion lag on fast scrolls
                     onEnter: () => {
                         const activeSlide = document.querySelector('.hero-slide.active');
