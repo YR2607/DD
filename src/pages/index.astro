@@ -22,8 +22,13 @@ const contactPortal = settings?.contactPortal || {
   link: '/contact/'
 };
 
-// Featured projects for the showcase (take first 6 or from CMS)
-const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
+// Hero slider: use heroProjects from CMS if available, otherwise fallback to first 6 projects
+const heroProjects = homeData?.heroProjects?.length > 0 
+  ? homeData.heroProjects 
+  : projects.slice(0, 6);
+
+// All projects for works showcase section
+const featuredProjects = heroProjects;
 ---
 
 <Layout title={metaTitle} description={metaDescription}>
@@ -51,6 +56,7 @@ const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
                   src={project.mainImage?.asset ? urlFor(project.mainImage).width(1800).url() : '/placeholder.png'} 
                   alt={project.title} 
                   class="slide-img"
+                  loading={index === 0 ? 'eager' : 'lazy'}
                 >
                 <div class="slide-overlay-text">See Detail</div>
               </div>
@@ -210,8 +216,8 @@ const featuredProjects = projects.length > 0 ? projects.slice(0, 6) : [];
                     <span class="about-number">{section.number}</span>
                     <h2 class="about-title">{section.title}</h2>
                     <div class="about-text-content">
-                      <p class="lead">{section.leadText}</p>
-                      <p>{section.bodyText}</p>
+                      <div class="lead"><PortableText value={section.leadText} /></div>
+                      <PortableText value={section.bodyText} />
                     </div>
                   </div>
                   <div class="about-visual reveal">

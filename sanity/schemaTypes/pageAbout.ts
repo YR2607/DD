@@ -101,6 +101,7 @@ export const pageAboutType = defineType({
                         {
                             type: 'object',
                             fields: [
+                                { name: 'label', type: 'string', title: 'Метка (например: Design Method)' },
                                 { name: 'title', type: 'string', title: 'Заголовок пункта' },
                                 { name: 'text', type: 'text', title: 'Текст пункта' },
                             ],

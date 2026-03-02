@@ -43,26 +43,18 @@ export const pageHomeType = defineType({
             group: 'hero',
         }),
         defineField({
-            name: 'heroSlides',
-            title: 'Слайдер проектов на главном экране (Hero)',
-            description: 'Слайды с фотографиями и ссылками на лучшие проекты',
+            name: 'heroProjects',
+            title: 'Проекты в слайдере Hero',
+            description: 'Выберите проекты для слайдера на главной. Порядок можно менять перетаскиванием. Если не выбрано — будут показаны последние 6 проектов.',
             type: 'array',
             group: 'hero',
             of: [
                 {
-                    type: 'object',
-                    fields: [
-                        { name: 'image', type: 'image', title: 'Фотография слайда', options: { hotspot: true } },
-                        { name: 'title', type: 'string', title: 'Название проекта' },
-                        { name: 'area', type: 'string', title: 'Площадь (Area)' },
-                        { name: 'year', type: 'string', title: 'Год завершения' },
-                        { name: 'projectLink', type: 'url', title: 'Ссылка на проект (вида /works/nasvanie-proekta)' },
-                    ],
-                    preview: {
-                        select: { title: 'title', subtitle: 'year', media: 'image' },
-                    },
+                    type: 'reference',
+                    to: [{ type: 'project' }],
                 },
             ],
+            validation: (Rule) => Rule.max(8).unique(),
         }),
 
         // --- ABOUT BLOCKS ---

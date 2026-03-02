@@ -32,7 +32,6 @@ export const pageContactType = defineType({
             group: 'hero',
             fields: [
                 { name: 'title', type: 'string', title: 'Заголовок страницы', initialValue: 'Contact' },
-                { name: 'subtitle', type: 'string', title: 'Логотип / подпись', initialValue: 'ASPECTMOBILI' },
                 { name: 'description', type: 'blockContent', title: 'Описание (Portable Text)' },
             ],
         }),

@@ -34,7 +34,10 @@ export async function getSiteSettings() {
 }
 
 export async function getHomePage() {
-    return await client.fetch(`*[_type == "pageHome"][0]`)
+    return await client.fetch(`*[_type == "pageHome"][0]{
+        ...,
+        heroProjects[]->{ ..., "id": _id }
+    }`)
 }
 
 export async function getAboutPage() {
