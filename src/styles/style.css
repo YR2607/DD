@@ -1605,7 +1605,10 @@ body.menu-open .main-header {
   }
 
   .about-title {
-    font-size: 3rem;
+    font-size: 2rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .about-text-content .lead {
@@ -1997,8 +2000,11 @@ body.menu-open .main-header {
   }
 
   .about-title {
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    margin-bottom: 15px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .about-text-content .lead {
@@ -2096,6 +2102,71 @@ body.menu-open .main-header {
     height: 1px;
     /* Thinner on mobile */
   }
+
+  /* Project Detail Page Mobile */
+  .project-detail-page .project-hero {
+    padding-top: 120px;
+    padding-bottom: 40px;
+  }
+
+  .project-detail-page .project-title {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    margin-bottom: 30px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .project-detail-page .project-desc-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-detail-page .main-image-wrap {
+    height: 50vh;
+  }
+
+  .project-detail-page .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-page .lead {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .project-detail-page .project-meta-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* Section title (About concept sections) */
+  .concept-lead .section-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Footer links improved spacing */
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  .footer-contact a {
+    font-size: 0.85rem;
+  }
+
+  /* Company statement text mobile */
+  .co-statement-text {
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+    line-height: 1.5;
+  }
+
+  /* Hero see-detail-link refinement */
+  .see-detail-link {
+    border-bottom-width: 1px;
+  }
 }
 
 /* Extra small screens */
@@ -2109,7 +2180,7 @@ body.menu-open .main-header {
   }
 
   .about-title {
-    font-size: clamp(1.8rem, 10vw, 2.5rem);
+    font-size: clamp(1.4rem, 7vw, 1.8rem);
   }
 
   .nav-links a {
@@ -3444,10 +3515,14 @@ body.menu-open .main-header {
   }
 
   .co-hero-bottom-right {
-    bottom: 40px;
-    right: 25px;
-    left: 25px;
+    bottom: 120px;
+    right: 20px;
+    left: 20px;
     max-width: none;
+  }
+
+  .company-page .scroll-hint {
+    bottom: 20px;
   }
 
   .co-hero-desc p {
@@ -3455,7 +3530,32 @@ body.menu-open .main-header {
   }
 
   .co-statement {
-    padding: 80px 0;
+    padding: 60px 0;
+    margin-top: 40px;
+  }
+
+  .co-numbers {
+    margin-top: 40px;
+  }
+
+  .co-profile {
+    margin-top: 40px;
+  }
+
+  .co-manifesto {
+    margin-top: 40px;
+  }
+
+  .co-timeline {
+    margin-top: 40px;
+  }
+
+  .co-clients {
+    margin-top: 40px;
+  }
+
+  .co-location {
+    margin-top: 40px;
   }
 
   .co-numbers-grid {
@@ -3482,7 +3582,7 @@ body.menu-open .main-header {
   }
 
   .co-manifesto {
-    padding: 80px 0;
+    padding: 60px 0;
   }
 
   .co-manifesto-main {

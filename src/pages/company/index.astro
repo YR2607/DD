@@ -84,7 +84,11 @@ const mapsUrl = access.googleMapsUrl || settings?.googleMapsUrl || 'https://www.
             <div class="container">
                 <div class="co-statement-inner">
                     <span class="co-section-num co-reveal">{statement.number}</span>
-                    <div class="co-statement-text co-reveal"><PortableText value={statement.text} /></div>
+                    {typeof statement.text === 'string' ? (
+                        <div class="co-statement-text co-reveal" set:html={statement.text}></div>
+                    ) : (
+                        <div class="co-statement-text co-reveal"><PortableText value={statement.text} /></div>
+                    )}
                 </div>
             </div>
         </section>
