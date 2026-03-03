@@ -23,4 +23,10 @@ export default defineConfig({
     ],
 
     adapter: vercel(),
+
+    vite: {
+        server: {
+            allowedHosts: ['3794-89-28-107-89.ngrok-free.app'],
+        },
+    },
 });

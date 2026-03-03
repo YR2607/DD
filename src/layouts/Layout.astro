@@ -59,6 +59,16 @@ Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <slot name="head" />
+		<script is:inline>
+			var isHome = window.location.pathname === '/' || window.location.pathname === '';
+			if (sessionStorage.getItem('preloaderShown') && !isHome) {
+				document.documentElement.classList.add('no-preloader');
+			}
+		</script>
+		<style>
+			html.no-preloader .preloader { display: none !important; }
+			html.no-preloader body { overflow: auto !important; }
+		</style>
 	</head>
 	<body class={`is-loading ${bodyClass}`}>
 		<!-- Film Grain Overlay -->
@@ -66,13 +76,23 @@ Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate
 
 		<!-- Preloader -->
 		<div id="preloader" class="preloader">
+			<div class="preloader-overlay preloader-overlay-left"></div>
+			<div class="preloader-overlay preloader-overlay-right"></div>
 			<div class="preloader-content">
+				<div class="preloader-corner preloader-corner-tl"></div>
+				<div class="preloader-corner preloader-corner-br"></div>
 				<div class="preloader-logo">
-					<span>{logoText}</span>
+					{logoText.split('').map((char: string, i: number) => (
+						<span class="preloader-char" style={`--char-index: ${i}`}>{char}</span>
+					))}
 				</div>
-				<div class="preloader-progress">
-					<div class="preloader-bar"></div>
+				<div class="preloader-sub">
+					<span>Spatial Design Studio</span>
 				</div>
+				<div class="preloader-line">
+					<div class="preloader-line-fill" id="preloader-line-fill"></div>
+				</div>
+				<div class="preloader-percent" id="preloader-percent">0</div>
 			</div>
 		</div>
 

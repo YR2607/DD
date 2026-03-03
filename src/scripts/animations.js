@@ -39,9 +39,9 @@ export function initScrollAnimations(slider) {
                 scrollTrigger: {
                     trigger: heroSection,
                     start: 'top top',
-                    end: 'bottom bottom', // Removed the +500 offset to fix the "sticking" issue
-                    scrub: isMobile ? 0.8 : 0.6, // Softened scrub on mobile (0.8 instead of true) to prevent jumps
-                    anticipatePin: 1,           // Helps smooth out the entry into the pinned state
+                    end: 'bottom bottom',
+                    scrub: isMobile ? 1.2 : 0.6,
+                    anticipatePin: 1,
                     onEnter: () => {
                         const activeSlide = document.querySelector('.hero-slide.active');
                         if (activeSlide && activeSlide.dataset.id) {
@@ -53,15 +53,12 @@ export function initScrollAnimations(slider) {
                                     card.style.display = 'block';
                                 }
                             });
-                            // Optional: refresh triggers slightly after layout reflow
-                            setTimeout(() => ScrollTrigger.refresh(), 50);
                         }
                     },
                     onLeaveBack: () => {
                         document.querySelectorAll('.work-card').forEach(card => {
                             card.style.display = 'block';
                         });
-                        setTimeout(() => ScrollTrigger.refresh(), 50);
                     },
                     onUpdate: (self) => {
                         if (self.progress > 0.02) {
@@ -78,10 +75,10 @@ export function initScrollAnimations(slider) {
                 duration: 1
             }, 0)
 
-            // Animate hero section height on mobile (from 110svh to 65svh)
+            // Mobile: use clipPath instead of height to avoid layout reflow
             if (isMobile) {
-                mainTl.to(heroSection, {
-                    height: '65svh',
+                mainTl.to('.hero-pin-wrapper', {
+                    clipPath: 'inset(0 0 15% 0)',
                     duration: 1,
                     ease: 'none'
                 }, 0)
@@ -91,7 +88,7 @@ export function initScrollAnimations(slider) {
                 mainTl.to(heroSlider, {
                     width: isMobile ? '100.2%' : '86%',
                     left: isMobile ? '0%' : '7%',
-                    height: isMobile ? '55svh' : '70vh',
+                    height: isMobile ? '100%' : '70vh',
                     y: isMobile ? '0vh' : '8vh',
                     borderRadius: isMobile ? '0px' : '2px',
                     duration: 1
@@ -246,19 +243,7 @@ export function initScrollAnimations(slider) {
         const aboutNumber = row.querySelector('.about-number')
 
         if (isMobileDevice) {
-            // MOBILE: Simple fade-in without heavy scrub/blur/splitText
-            gsap.from([imageMask, aboutImg, aboutNumber, aboutTitle, aboutText].filter(Boolean), {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: row,
-                    start: 'top 90%',
-                    toggleActions: 'play none none none'
-                }
-            })
+            // MOBILE: No animations, content is static
         } else {
             // DESKTOP: Full cinematic animations
             // Cinematic Image Reveal

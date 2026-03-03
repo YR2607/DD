@@ -31,8 +31,14 @@ export function initNavigation(lenis) {
     burgerBtn.addEventListener('click', toggleMenu)
 
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navOverlay.classList.contains('active')) toggleMenu()
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href')
+            // If same page, just close menu
+            if (href === window.location.pathname) {
+                e.preventDefault()
+                toggleMenu()
+            }
+            // Otherwise: let browser navigate normally, menu stays open
         })
     })
 }

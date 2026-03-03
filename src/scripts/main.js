@@ -186,16 +186,129 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Smooth scroll
   const lenis = initScroller()
 
-  // 2. Preloader
   const preloader = document.getElementById('preloader')
   const isWorksPage = document.body.classList.contains('works-page')
   const isCompanyPage = document.body.classList.contains('company-page')
-  const isSimplePage = isWorksPage || isCompanyPage
+  const isAboutPage = document.body.classList.contains('about-page')
+  const isContactPage = document.body.classList.contains('contact-page')
 
+  // Check if preloader was already shown this session
+  const preloaderShown = sessionStorage.getItem('preloaderShown')
+  const isHomePage = window.location.pathname === '/' || window.location.pathname === ''
+
+  function initPageComponents() {
+    initNavigation(lenis)
+
+    let slider
+    if (!isWorksPage && !isCompanyPage && !isAboutPage) {
+      slider = initHeroSlider(lenis)
+    }
+
+    if (isWorksPage) {
+      initWorksPage()
+    } else if (isCompanyPage) {
+      initCompanyPage()
+    }
+
+    if (isContactPage) {
+      const reveals = document.querySelectorAll('.reveal')
+      reveals.forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+          }
+        )
+      })
+    }
+
+    initScrollAnimations(slider)
+  }
+
+  // --- SKIP PRELOADER on subsequent navigations (except home page) ---
+  if (preloaderShown && !isHomePage) {
+    // Remove preloader immediately
+    if (preloader) {
+      preloader.classList.add('hidden')
+    }
+    document.body.classList.remove('is-loading')
+    initPageComponents()
+    return
+  }
+
+  // --- FIRST VISIT: show preloader with real progress ---
+  sessionStorage.setItem('preloaderShown', '1')
+
+  const percentEl = document.getElementById('preloader-percent')
+  const lineFill = document.getElementById('preloader-line-fill')
+
+  let currentPercent = 0
+  let targetPercent = 0
+  let pageLoaded = false
   let initialized = false
+
+  // Track real image loading
+  const imgs = document.querySelectorAll('img')
+  const totalImgs = imgs.length
+  let loadedCount = 0
+
+  function updateTargetByResources() {
+    if (totalImgs === 0) {
+      targetPercent = pageLoaded ? 100 : 50
+    } else {
+      // 90% of progress tied to images, last 10% on window.load
+      const resourceProgress = (loadedCount / totalImgs) * 90
+      targetPercent = Math.max(targetPercent, Math.floor(resourceProgress))
+    }
+  }
+
+  if (totalImgs > 0) {
+    imgs.forEach(img => {
+      if (img.complete) {
+        loadedCount++
+        updateTargetByResources()
+      } else {
+        img.addEventListener('load', () => {
+          loadedCount++
+          updateTargetByResources()
+        })
+        img.addEventListener('error', () => {
+          loadedCount++
+          updateTargetByResources()
+        })
+      }
+    })
+  } else {
+    setTimeout(() => { targetPercent = 50 }, 100)
+  }
+
+  // Smooth counter animation
+  function updatePercent() {
+    if (currentPercent < targetPercent) {
+      const diff = targetPercent - currentPercent
+      const step = Math.max(1, Math.ceil(diff * 0.2))
+      currentPercent = Math.min(currentPercent + step, targetPercent)
+
+      if (percentEl) percentEl.textContent = currentPercent
+      if (lineFill) lineFill.style.width = currentPercent + '%'
+    }
+
+    if (currentPercent >= 100 && pageLoaded) {
+      hidePreloader()
+    } else {
+      requestAnimationFrame(updatePercent)
+    }
+  }
+
+  requestAnimationFrame(updatePercent)
+
   const hidePreloader = () => {
     if (initialized) return
     initialized = true
+
+    if (percentEl) percentEl.textContent = '100'
+    if (lineFill) lineFill.style.width = '100%'
 
     setTimeout(() => {
       if (preloader) {
@@ -203,46 +316,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       document.body.classList.remove('is-loading')
 
-      // 3. Init components based on page
-      initNavigation(lenis)
+      initPageComponents()
 
-      let slider;
-      if (!isWorksPage && !isCompanyPage && !document.body.classList.contains('about-page')) {
-        slider = initHeroSlider(lenis)
-      }
-
-      if (isWorksPage) {
-        initWorksPage()
-      } else if (isCompanyPage) {
-        initCompanyPage()
-      }
-
-      // Contact page reveal animations (other pages have their own in animations.js)
-      if (document.body.classList.contains('contact-page')) {
-        const reveals = document.querySelectorAll('.reveal')
-        reveals.forEach((el) => {
-          gsap.fromTo(el,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-              scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-            }
-          )
-        })
-      }
-
-      // Always init scroll animations for global header behavior
-      initScrollAnimations(slider)
-    }, isSimplePage ? 50 : 200)
+      // Remove preloader from DOM after curtain animation
+      setTimeout(() => {
+        if (preloader) preloader.classList.add('hidden')
+      }, 800)
+    }, 100)
   }
 
-  // Fallback to hide preloader if load event takes too long (faster on mobile)
-  const isMobilePreloader = window.innerWidth <= 768
-  const fallbackTimeout = setTimeout(hidePreloader, isMobilePreloader ? 1500 : 3000)
-
+  // When page actually loads, allow 100%
   window.addEventListener('load', () => {
-    clearTimeout(fallbackTimeout)
-    hidePreloader()
+    pageLoaded = true
+    targetPercent = 100
   })
-})
 
+  // Safety fallback
+  setTimeout(() => {
+    pageLoaded = true
+    targetPercent = 100
+  }, 5000)
+})
